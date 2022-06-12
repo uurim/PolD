@@ -7,6 +7,7 @@
         android:id="@+id/calMenu"
         android:enabled="true"
         android:icon="@drawable/selected_cal_icon"
+
         app:showAsAction="always"
         />
 
