@@ -8,8 +8,6 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-import dalvik.system.PathClassLoader;
-
 public class MainActivity extends AppCompatActivity {
 
     CalFragment calFragment;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("메인은 감정~");
+        setTitle("감정보기");
 
         //프래그먼트 생성
         calFragment = new CalFragment();
@@ -43,17 +41,15 @@ public class MainActivity extends AppCompatActivity {
                 //메뉴 선택 프래그먼트 연결
                 switch (item.getItemId()){
                     case R.id.calMenu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment).commit();
                         return true;
                     case R.id.polMenu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment).commit();
                         return true;
                     case R.id.setMenu:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment).commit();
                         return true;
-
                 }
-
                 return false;
             }
         });
