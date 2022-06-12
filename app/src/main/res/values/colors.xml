@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="pol_purple">#CCBAF1</color>
+    <color name="pol_red">#F694A6</color>
+    <color name="pol_pink">#FFC5C5</color>
+    <color name="pol_orange">#FFD9C0</color>
+    <color name="pol_yellow">#FFEFC8</color>
+    <color name="pol_lemon">#FFF59D</color>
+    <color name="pol_mint">#CCF6C8</color>
+    <color name="pol_green">#A4DC9B</color>
+    <color name="pol_blue">#93CCEC</color>
+    <color name="pol_navy">#91B7EF</color>
+    <color name="pol_gray">#CCCCCC</color>
 </resources>
