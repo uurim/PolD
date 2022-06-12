@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="100dp">
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="90dp"
@@ -25,8 +25,7 @@
             android:text="Copyright 2022 잡초. All rights reserved."
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"/>
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
 </LinearLayout>
