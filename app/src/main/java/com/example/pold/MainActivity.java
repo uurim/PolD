@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     PolFragment polFragment;
     DetailFragment detailFragment;
     EditFragment editFragment;
+    ChartFragment chartFragment;
     SettingFragment settingFragment;
 
     NavigationBarView navigationBarView;
@@ -61,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment).commit();
                         return true;
+                    case R.id.chartMenu:
+                        item.setIcon(R.drawable.selected_chart_icon);
+                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
+                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, chartFragment).commit();
+                        return true;
                     case R.id.setMenu:
                         item.setIcon(R.drawable.selected_set_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
@@ -68,12 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment).commit();
                         return true;
-                    case R.id.chartMenu:
-                        item.setIcon(R.drawable.selected_chart_icon);
-                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
-                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
-                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        return true;
+
                 }
                 return false;
             }
