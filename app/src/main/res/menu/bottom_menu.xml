@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="캘린더"
+        android:id="@+id/calMenu"
+        android:enabled="true"
+        android:icon="@drawable/calendar_icon"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="사진"
+        android:id="@+id/polMenu"
+        android:enabled="true"
+        android:icon="@drawable/polaroid_icon"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="선택"
+        android:id="@+id/selMenu"
+        android:enabled="true"
+        android:icon="@drawable/select_icon"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="통계"
+        android:id="@+id/chartMenu"
+        android:enabled="true"
+        android:icon="@drawable/chart_icon"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="설정"
+        android:id="@+id/setMenu"
+        android:enabled="true"
+        android:icon="@drawable/setting_icon"
+        app:showAsAction="always"
+        />
+</menu>
