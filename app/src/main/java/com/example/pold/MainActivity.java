@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         polFragment = new PolFragment();
         detailFragment = new DetailFragment();
         editFragment = new EditFragment();
+        chartFragment = new ChartFragment();
         settingFragment = new SettingFragment();
 
         //초기 프래그먼트 설정

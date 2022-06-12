@@ -3,23 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/drawable/menu_selector_color.xml" value="0.1" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/font/font.xml" value="0.17870884993587002" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/activity_main.xml" value="0.30012825994014536" />
+        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/detail.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/edit.xml" value="0.35104166666666664" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_cal.xml" value="0.2873030583873957" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_cal_list.xml" value="0.2845082313212326" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_detail.xml" value="0.1" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_item_list.xml" value="0.35104166666666664" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_pol.xml" value="0.1" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_pol_list.xml" value="0.2845082313212326" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_setting.xml" value="0.16358024691358025" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/photo_list.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/setting.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/layout/splash.xml" value="0.2702702702702703" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/menu/bottom_menu.xml" value="0.33" />
-        <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/menu/circle_menu.xml" value="0.30012825994014536" />
         <entry key="..\:/Users/YL/22-1AndroidStudioProjects/PolD/app/src/main/res/menu/menu.xml" value="0.358974358974359" />
       </map>
     </option>
