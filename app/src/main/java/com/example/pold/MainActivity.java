@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("감정보기");
+        setTitle("메인은 감정~");
 
         //프래그먼트 생성
         calFragment = new CalFragment();
