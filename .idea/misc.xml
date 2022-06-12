@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21" />
         <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/drawable/gradient.xml" value="0.177" />
+        <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21" />
+        <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/drawable/ic_pold_background.xml" value="0.21" />
         <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/font/font.xml" value="0.32492518170158186" />
         <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/LeeSoohwa/AndroidStudioProjects/PolD/app/src/main/res/layout/fragment_cal.xml" value="0.23526745240253852" />
