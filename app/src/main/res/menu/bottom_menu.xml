@@ -6,7 +6,7 @@
         android:title="캘린더"
         android:id="@+id/calMenu"
         android:enabled="true"
-        android:icon="@drawable/calendar_icon"
+        android:icon="@drawable/selected_cal_icon"
         app:showAsAction="always"
         />
 
@@ -14,7 +14,7 @@
         android:title="사진"
         android:id="@+id/polMenu"
         android:enabled="true"
-        android:icon="@drawable/polaroid_icon"
+        android:icon="@drawable/pol_icon"
         app:showAsAction="always"
         />
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
@@ -15,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
     DetailFragment detailFragment;
     EditFragment editFragment;
     SettingFragment settingFragment;
+
+    NavigationBarView navigationBarView;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment).commit();
 
         //하단바 생성
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_nav_view);
+        navigationBarView = findViewById(R.id.bottom_nav_view);
+        menu = navigationBarView.getMenu();
+
+        navigationBarView.setItemIconTintList(null);
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -41,13 +48,31 @@ public class MainActivity extends AppCompatActivity {
                 //메뉴 선택 프래그먼트 연결
                 switch (item.getItemId()){
                     case R.id.calMenu:
+                        item.setIcon(R.drawable.selected_cal_icon);
+                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+                        menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
+                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment).commit();
                         return true;
                     case R.id.polMenu:
+                        item.setIcon(R.drawable.selected_pol_icon);
+                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
+                        menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
+                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment).commit();
                         return true;
                     case R.id.setMenu:
+                        item.setIcon(R.drawable.selected_set_icon);
+                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
+                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+                        menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment).commit();
+                        return true;
+                    case R.id.chartMenu:
+                        item.setIcon(R.drawable.selected_chart_icon);
+                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
+                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
                         return true;
                 }
                 return false;

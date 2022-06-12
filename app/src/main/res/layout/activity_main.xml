@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:itemBackground="@color/white"
+        app:itemTextColor="@drawable/menu_selector_color"
         app:menu="@menu/bottom_menu" />
 
 </LinearLayout>
