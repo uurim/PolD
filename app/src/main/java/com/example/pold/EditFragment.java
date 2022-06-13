@@ -70,7 +70,7 @@ public class EditFragment extends Fragment {
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            TextView tv = getView().findViewById(R.id.txtEditDate);
+            TextView tv = getView().findViewById(R.id.txtDate);
             tv.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
         }
     };
@@ -82,7 +82,7 @@ public class EditFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_edit, container, false);
 
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
-        TextView tv = v.findViewById(R.id.txtEditDate);
+        TextView tv = v.findViewById(R.id.txtDate);
         tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH)+1) +"월 "+ cal.get(Calendar.DATE) + "일");
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
