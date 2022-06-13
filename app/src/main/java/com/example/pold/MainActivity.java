@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("감정보기");
 
         //프래그먼트 생성
         calFragment = new CalFragment();
@@ -62,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment).commit();
+                        return true;
+                    case R.id.selMenu:
+                        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+                        menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
+                        menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
+                        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment).commit();
                         return true;
                     case R.id.chartMenu:
                         item.setIcon(R.drawable.selected_chart_icon);
