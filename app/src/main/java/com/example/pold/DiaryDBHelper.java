@@ -12,12 +12,19 @@ public class DiaryDBHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE diary (" +
+                "code INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "title VARCHAR(20)," +
+                "date DATE," +
+                "contents TEXT," +
+                "uri VARCHAR(??)," +
+                "mood INTEGER);");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS diary");
+        onCreate(db);
     }
 }
