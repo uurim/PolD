@@ -7,8 +7,10 @@
     tools:context=".EditFragment">
 
     <TextView
+        android:id="@+id/txtEditDate"
+        android:fontFamily="@font/ssyoungestdaughterregular"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="일기쓰기" />
+        android:text="날짜" />
 
 </LinearLayout>

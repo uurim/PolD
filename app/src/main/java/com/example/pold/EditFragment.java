@@ -1,5 +1,6 @@
 package com.example.pold;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +60,37 @@ public class EditFragment extends Fragment {
         }
     }
 
+    private  DiaryDBHelper  helper = null;
+    Calendar cal = Calendar.getInstance();
+
+    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            TextView tv = getView().findViewById(R.id.txtEditDate);
+            tv.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit, container, false);
+
+        // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
+        TextView tv = v.findViewById(R.id.txtEditDate);
+        tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH)+1) +"월 "+ cal.get(Calendar.DATE) + "일");
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), myDatePicker, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        return v;
     }
+
 }
