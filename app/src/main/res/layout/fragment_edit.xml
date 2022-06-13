@@ -50,7 +50,6 @@
             android:inputType="text"
             android:textSize="20sp" />
 
-
     </FrameLayout>
 
 </LinearLayout>
