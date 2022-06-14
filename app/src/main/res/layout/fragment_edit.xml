@@ -1,29 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".EditFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iconCancel"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="horizontal" />
+
+        <ImageView
+            android:id="@+id/iconCheck"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_check" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/ssyoungestdaughterregular"
         android:text="0000년 00월 00일"
         android:textSize="20sp"/>
 
-    <FrameLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical">
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
             android:background="#FFFFFF">
 
             <FrameLayout
@@ -33,7 +69,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="120dp"
-                android:background="#E8E8E8"/>
+                android:background="#E8E8E8" />
 
             <EditText
                 android:id="@+id/editTitle"
@@ -49,9 +85,18 @@
                 android:gravity="center_horizontal"
                 android:hint="일기 제목을 ="
                 android:inputType="text"
-                android:textSize="20sp"
-                />
+                android:textSize="20sp" />
 
-    </FrameLayout>
+        </FrameLayout>
+
+        <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_text"
+                android:layout_marginBottom="100dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
