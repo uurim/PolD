@@ -15,5 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!-- Font theme -->
+        <item name="android:fontFamily">@font/ssyoungestdaughterregular</item>
     </style>
 </resources>

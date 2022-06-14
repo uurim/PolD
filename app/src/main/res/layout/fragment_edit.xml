@@ -13,7 +13,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="32dp"
-        android:fontFamily="@font/ssyoungestdaughterregular"
         android:text="0000년 00월 00일"
         android:textSize="20sp" />
 
@@ -45,7 +44,6 @@
             android:layout_marginBottom="50dp"
             android:background="@null"
             android:ems="20"
-            android:fontFamily="@font/ssyoungestdaughterregular"
             android:gravity="center_horizontal"
             android:hint="일기 제목을 적어주세요"
             android:inputType="text"

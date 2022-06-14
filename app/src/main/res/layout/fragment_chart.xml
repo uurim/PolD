@@ -25,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/ssyoungestdaughterregular"
-            android:text="감정 모니터는 준비중입니다~"
+            android:text="감정 모니터는 준비중입니다."
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
