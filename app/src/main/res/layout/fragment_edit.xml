@@ -47,7 +47,7 @@
                 android:ems="20"
                 android:fontFamily="@font/ssyoungestdaughterregular"
                 android:gravity="center_horizontal"
-                android:hint="일기 제목을 적어주세요"
+                android:hint="일기 제목을 ="
                 android:inputType="text"
                 android:textSize="20sp"
                 />
