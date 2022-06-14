@@ -68,7 +68,16 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="120dp"
-                android:background="#E8E8E8" />
+                android:background="#E8E8E8">
+
+                <ImageView
+                    android:id="@+id/iconImg"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_img" />
+
+            </FrameLayout>
 
             <EditText
                 android:id="@+id/editTitle"
