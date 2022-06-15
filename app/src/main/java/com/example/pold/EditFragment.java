@@ -83,7 +83,7 @@ public class EditFragment extends Fragment {
 
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
         TextView tv = v.findViewById(R.id.txtDate);
-        tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH)+1) +"월 "+ cal.get(Calendar.DATE) + "일");
+        tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH) + 1) +"월 "+ cal.get(Calendar.DATE) + "일");
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

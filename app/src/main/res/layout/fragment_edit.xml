@@ -62,6 +62,7 @@
             android:background="#FFFFFF">
 
             <FrameLayout
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
@@ -97,7 +98,7 @@
         </FrameLayout>
 
         <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/iconText"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="right"
