@@ -14,12 +14,12 @@ public class DiaryDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE diary (" +
-                "code INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "title VARCHAR(20)," +
-                "date CHAR(10)," +
-                "contents TEXT," +
-                "uri VARCHAR(512)," +
-                "mood INTEGER);");
+                "'code' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "'title' VARCHAR(20)," +
+                "'date' CHAR(10)," +
+                "'contents' TEXT," +
+                "'uri' VARCHAR(512)," +
+                "'mood' INTEGER);");
     }
 
     @Override
