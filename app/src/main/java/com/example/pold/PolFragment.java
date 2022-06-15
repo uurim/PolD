@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,27 +54,10 @@ public class PolFragment extends Fragment {
         }
     }
 
-    // DB헬퍼
-    DiaryDBHelper dbHelper;
-    SQLiteDatabase sqlDB;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_edit, container, false);
-
-        sqlDB = dbHelper.getReadableDatabase();
-        Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT * FROM dairy;", null);
-
-        String strCode = "코드" + "\r\n";
-        String strDate = "날짜" + "\r\n";
-        String strTitle = "제목" + "\r\n";
-        String strContents = "일기" + "\r\n";
-        String strUri = "코드" + "\r\n";
-        String strMood = "감정" + "\r\n";
-
-        return v;
+        return inflater.inflate(R.layout.fragment_pol, container, false);
     }
 }

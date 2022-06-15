@@ -12,4 +12,5 @@
         android:text="폴라로이드 리스트"
         android:textSize="20sp" />
 
+
 </FrameLayout>
