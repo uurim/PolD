@@ -1,7 +1,6 @@
 package com.example.pold;
 
 import android.app.DatePickerDialog;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -64,13 +60,7 @@ public class EditFragment extends Fragment {
         }
     }
 
-    DiaryDBHelper dbHelper;
-    SQLiteDatabase sqlDB;
-
-    TextView txtDate;
-    EditText editTitle;
-    ImageView iconCancel, iconCheck, iconImg, IconText;
-
+    private  DiaryDBHelper  helper = null;
     Calendar cal = Calendar.getInstance();
 
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
@@ -100,37 +90,6 @@ public class EditFragment extends Fragment {
                 new DatePickerDialog(getContext(), myDatePicker, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-        txtDate = v.findViewById(R.id.txtDate);
-        editTitle = v.findViewById(R.id.editTitle);
-        iconCancel = v.findViewById(R.id.iconCancel);
-        iconCheck = v.findViewById(R.id.iconCheck);
-
-        dbHelper = new DiaryDBHelper(getContext());
-        iconCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sqlDB = dbHelper.getWritableDatabase();
-                sqlDB.execSQL("INSERT INTO diary VALUES (" +
-                        "NULL, '" +
-                        editTitle.getText().toString() + "', '" +
-                        txtDate.getText().toString() + "', " +
-                        "'contents', 'uri', " + 1 + ");");
-                sqlDB.close();
-                Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        iconCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sqlDB = dbHelper.getWritableDatabase();
-                dbHelper.onUpgrade(sqlDB, 1, 2);
-                sqlDB.close();
-                Toast.makeText(getContext(), "초기화", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         return v;
     }
 
