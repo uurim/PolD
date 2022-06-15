@@ -1,14 +1,27 @@
 package com.example.pold;
 
+import android.Manifest;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -60,9 +73,12 @@ public class EditFragment extends Fragment {
         }
     }
 
+    //DB헬퍼
     private  DiaryDBHelper  helper = null;
+    //캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
 
+    //데이트피커다이얼로그 생성
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -78,8 +94,38 @@ public class EditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_edit, container, false);
+
+
+        // flip
+        FrameLayout front = v.findViewById(R.id.front_card);
+        FrameLayout back = v.findViewById(R.id.back_card);
+        ImageView btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
+        ImageView btnBackFlip = v.findViewById(R.id.btnBackFlip);
+
+        btnFrontFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                front.setVisibility(View.GONE);
+                back.setVisibility(View.VISIBLE);
+                btnFrontFlip.setVisibility(View.GONE);
+                btnBackFlip.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnBackFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back.setVisibility(View.GONE);
+                front.setVisibility(View.VISIBLE);
+                btnBackFlip.setVisibility(View.GONE);
+                btnFrontFlip.setVisibility(View.VISIBLE);
+            }
+        });
+
+
 
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
         TextView tv = v.findViewById(R.id.txtDate);
@@ -90,6 +136,7 @@ public class EditFragment extends Fragment {
                 new DatePickerDialog(getContext(), myDatePicker, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
         return v;
     }
 
