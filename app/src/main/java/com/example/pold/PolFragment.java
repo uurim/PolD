@@ -1,5 +1,7 @@
 package com.example.pold;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,8 +34,6 @@ public class PolFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment PlFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -53,10 +53,27 @@ public class PolFragment extends Fragment {
         }
     }
 
+    // DB헬퍼
+    DiaryDBHelper dbHelper;
+    SQLiteDatabase sqlDB;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pol, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit, container, false);
+
+        sqlDB = dbHelper.getReadableDatabase();
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT * FROM dairy;", null);
+
+        String strCode = "코드" + "\r\n";
+        String strDate = "날짜" + "\r\n";
+        String strTitle = "제목" + "\r\n";
+        String strContents = "일기" + "\r\n";
+        String strUri = "코드" + "\r\n";
+        String strMood = "감정" + "\r\n";
+
+        return v;
     }
 }

@@ -81,14 +81,14 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         }
     }
 
-    //DB헬퍼
+    // DB헬퍼
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    //캘린더 객체 생성
+    // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
 
-    //데이트피커다이얼로그 생성
+    // 데이트피커다이얼로그 생성
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -191,7 +191,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         return v;
     }
 
-    //뒤로가기
+    // 뒤로가기
     @Override
     public void onBackPressed() {
         ((MainActivity)getActivity()).replaceFragment(PolFragment.newInstance());
