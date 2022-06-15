@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -25,13 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditFragment extends Fragment {
+public class EditFragment extends Fragment  implements onBackPressedListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -137,7 +140,31 @@ public class EditFragment extends Fragment {
             }
         });
 
+
+        // 뒤로가기 버튼
+        ImageView btnBack = v.findViewById(R.id.iconCancel);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+
         return v;
     }
 
+    //뒤로가기
+    @Override
+    public void onBackPressed() {
+        goToMain();
+    }
+
+    //프래그먼트 종료
+    private void goToMain(){
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().remove(this).commit();
+        fragmentManager.popBackStack();
+    }
 }
