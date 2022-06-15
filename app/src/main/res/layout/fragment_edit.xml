@@ -110,6 +110,7 @@
             android:background="#FFFFFF">
 
             <EditText
+                android:id="@+id/editDiary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"

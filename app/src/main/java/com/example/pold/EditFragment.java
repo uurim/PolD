@@ -3,10 +3,13 @@ package com.example.pold;
 import android.Manifest;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,9 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -77,7 +82,9 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     }
 
     //DB헬퍼
-    private  DiaryDBHelper  helper = null;
+    DiaryDBHelper dbHelper;
+    SQLiteDatabase sqlDB;
+
     //캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
 
@@ -100,7 +107,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_edit, container, false);
-
 
         // flip
         FrameLayout front = v.findViewById(R.id.front_card);
@@ -128,8 +134,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             }
         });
 
-
-
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
         TextView tv = v.findViewById(R.id.txtDate);
         tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH) + 1) +"월 "+ cal.get(Calendar.DATE) + "일");
@@ -140,17 +144,49 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             }
         });
 
-
         // 뒤로가기 버튼
         ImageView btnBack = v.findViewById(R.id.iconCancel);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                AlertDialog.Builder backDlg = new AlertDialog.Builder(getContext());
+                backDlg.setMessage("작성된 내용이 저장되지 않습니다.\n뒤로 가시겠습니까?");
+                backDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        onBackPressed();
+                    }
+                });
+                backDlg.setNegativeButton("취소", null);
+                backDlg.show();
             }
         });
 
+        // DB 입력
+        dbHelper = new DiaryDBHelper(getContext());
 
+        TextView txtDate = v.findViewById(R.id.txtDate);
+        EditText editTitle = v.findViewById(R.id.editTitle);
+        EditText editDiary = v.findViewById(R.id.editDiary);
+
+        ImageView btnCheck = v.findViewById(R.id.iconCheck);
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqlDB = dbHelper.getWritableDatabase();
+                sqlDB.execSQL("INSERT INTO diary VALUES (" +
+                        "NULL, '" +
+                        editTitle.getText().toString() + "', '" +
+                        txtDate.getText().toString() + "', '" +
+                        editDiary.getText().toString() + "', " +
+                        "'uri', " + 1 + ");");
+                sqlDB.close();
+                Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
+
+                // 폴라로이드 리스트로 이동
+                onBackPressed();
+            }
+        });
 
         return v;
     }
@@ -158,13 +194,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     //뒤로가기
     @Override
     public void onBackPressed() {
-        goToMain();
-    }
-
-    //프래그먼트 종료
-    private void goToMain(){
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(this).commit();
-        fragmentManager.popBackStack();
+        ((MainActivity)getActivity()).replaceFragment(PolFragment.newInstance());
     }
 }

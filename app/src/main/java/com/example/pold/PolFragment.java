@@ -37,11 +37,9 @@ public class PolFragment extends Fragment {
      * @return A new instance of fragment PlFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PolFragment newInstance(String param1, String param2) {
+    public static PolFragment newInstance() {
         PolFragment fragment = new PolFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
