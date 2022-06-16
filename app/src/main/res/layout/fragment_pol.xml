@@ -16,4 +16,14 @@
         android:text="0000년 00월"
         android:textSize="20sp" />
 
+    <GridView
+        android:id="@+id/polGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:numColumns="3">
+
+    </GridView>
+
 </LinearLayout>

@@ -60,6 +60,7 @@ public class PolFragment extends Fragment {
     }
 
     // 필요한 변수 모음
+    View v;
     TextView txtDatePol;
 
     // 캘린더 객체 생성
@@ -82,7 +83,7 @@ public class PolFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_pol, container, false);
+        v = inflater.inflate(R.layout.fragment_pol, container, false);
 
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
         txtDatePol = v.findViewById(R.id.txtDatePol);

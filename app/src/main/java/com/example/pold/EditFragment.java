@@ -63,6 +63,8 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         }
     }
 
+    View v;
+
     // DB 헬퍼
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
@@ -94,7 +96,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_edit, container, false);
+        v = inflater.inflate(R.layout.fragment_edit, container, false);
 
         // frame
         front = v.findViewById(R.id.front_card);
@@ -170,7 +172,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                         editTitle.getText().toString() + "', '" +
                         txtDate.getText().toString() + "', '" +
                         editDiary.getText().toString() + "', " +
-                        "'uri', " + 1 + ");");
+                        "'uri', " + position + ");");
                 sqlDB.close();
                 Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
