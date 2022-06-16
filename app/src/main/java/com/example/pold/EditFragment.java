@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -154,6 +155,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                 backDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        onDestroy();
                         onBackPressed();
                     }
                 });
@@ -184,7 +186,20 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                 Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
                 // 폴라로이드 리스트로 이동
+                onDestroy();
                 onBackPressed();
+            }
+        });
+
+        // 지울 거 : 개발중 DB 초기화 버튼
+        ImageView justRemove = v.findViewById(R.id.iconImg);
+        justRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqlDB = dbHelper.getWritableDatabase();
+                dbHelper.onUpgrade(sqlDB, 1, 2);
+                sqlDB.close();
+                Toast.makeText(getContext(), "초기화됨", Toast.LENGTH_SHORT).show();
             }
         });
 

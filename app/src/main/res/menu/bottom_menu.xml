@@ -12,7 +12,7 @@
         />
 
     <item
-        android:title="사진"
+        android:title="폴라로이드"
         android:id="@+id/polMenu"
         android:enabled="true"
         android:icon="@drawable/pol_icon"
@@ -20,7 +20,7 @@
         />
 
     <item
-        android:title="선택"
+        android:title="일기작성"
         android:id="@+id/selMenu"
         android:enabled="true"
         android:icon="@drawable/select_icon"
@@ -28,7 +28,7 @@
         />
 
     <item
-        android:title="통계"
+        android:title="모니터"
         android:id="@+id/chartMenu"
         android:enabled="true"
         android:icon="@drawable/chart_icon"

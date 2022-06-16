@@ -123,5 +123,6 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.containers, fragment).commit();
+        menu.findItem(R.id.polMenu).setIcon(R.drawable.selected_pol_icon);
     }
 }
