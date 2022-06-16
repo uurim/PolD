@@ -28,8 +28,10 @@ import java.util.Calendar;
 public class EditFragment extends Fragment  implements onBackPressedListener {
 
     private static final String FRAME_COLOR = "color";
+    private static final String MOOD_CODE = "position";
 
     private int color;
+    private int position;
 
     public EditFragment() {
         // Required empty public constructor
@@ -42,10 +44,11 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
      * @return A new instance of fragment EditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EditFragment newInstance(int color) {
+    public static EditFragment newInstance(int color, int position) {
         EditFragment fragment = new EditFragment();
         Bundle args = new Bundle();
         args.putInt(FRAME_COLOR, color);
+        args.putInt(MOOD_CODE, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +59,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             color = getArguments().getInt(FRAME_COLOR);
+            position = getArguments().getInt(MOOD_CODE);
         }
     }
 

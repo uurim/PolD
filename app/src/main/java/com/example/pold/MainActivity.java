@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 wheelView.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance(color)).commitNow();
+                getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance(color, position)).commitNow();
             }
         });
     }
