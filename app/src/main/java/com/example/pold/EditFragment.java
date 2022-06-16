@@ -1,30 +1,16 @@
 package com.example.pold;
 
-import android.Manifest;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -33,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,16 +44,12 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment EditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EditFragment newInstance(String param1, String param2) {
+    public static EditFragment newInstance() {
         EditFragment fragment = new EditFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,9 +63,15 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         }
     }
 
-    // DB헬퍼
+    // DB 헬퍼
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
+
+    // 필요한 변수 모음
+    FrameLayout front, back;
+    TextView txtDate;
+    EditText editTitle, editDiary;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck;
 
     // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
@@ -97,8 +84,8 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            TextView tv = getView().findViewById(R.id.txtDate);
-            tv.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+            txtDate = getView().findViewById(R.id.txtDate);
+            txtDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
         }
     };
 
@@ -110,10 +97,10 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         View v = inflater.inflate(R.layout.fragment_edit, container, false);
 
         // flip
-        FrameLayout front = v.findViewById(R.id.front_card);
-        FrameLayout back = v.findViewById(R.id.back_card);
-        ImageView btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
-        ImageView btnBackFlip = v.findViewById(R.id.btnBackFlip);
+        front = v.findViewById(R.id.front_card);
+        back = v.findViewById(R.id.back_card);
+        btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
+        btnBackFlip = v.findViewById(R.id.btnBackFlip);
 
         btnFrontFlip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,9 +123,9 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         });
 
         // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
-        TextView tv = v.findViewById(R.id.txtDate);
-        tv.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH) + 1) +"월 "+ cal.get(Calendar.DATE) + "일");
-        tv.setOnClickListener(new View.OnClickListener() {
+        txtDate = v.findViewById(R.id.txtDate);
+        txtDate.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH) + 1) +"월 "+ cal.get(Calendar.DATE) + "일");
+        txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getContext(), myDatePicker, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
@@ -146,7 +133,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         });
 
         // 뒤로가기 버튼
-        ImageView btnBack = v.findViewById(R.id.iconCancel);
+        btnBack = v.findViewById(R.id.iconCancel);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +142,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                 backDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        onDestroy();
                         onBackPressed();
                     }
                 });
@@ -167,11 +153,10 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         // DB 입력
         dbHelper = new DiaryDBHelper(getContext());
 
-        TextView txtDate = v.findViewById(R.id.txtDate);
-        EditText editTitle = v.findViewById(R.id.editTitle);
-        EditText editDiary = v.findViewById(R.id.editDiary);
+        editTitle = v.findViewById(R.id.editTitle);
+        editDiary = v.findViewById(R.id.editDiary);
 
-        ImageView btnCheck = v.findViewById(R.id.iconCheck);
+        btnCheck = v.findViewById(R.id.iconCheck);
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +171,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                 Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
                 // 폴라로이드 리스트로 이동
-                onDestroy();
                 onBackPressed();
             }
         });
@@ -206,9 +190,10 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         return v;
     }
 
-    // 뒤로가기
+    // 뒤로가기 : 폴라로이드 리스트로 이동
     @Override
     public void onBackPressed() {
         ((MainActivity)getActivity()).replaceFragment(PolFragment.newInstance());
     }
+
 }

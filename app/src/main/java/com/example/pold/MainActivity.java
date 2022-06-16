@@ -58,35 +58,35 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment.newInstance()).commitNow();
                         return true;
                     case R.id.polMenu:
                         item.setIcon(R.drawable.selected_pol_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment.newInstance()).commitNow();
                         return true;
                     case R.id.selMenu:
                         menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance()).commitNow();
                         return true;
                     case R.id.chartMenu:
                         item.setIcon(R.drawable.selected_chart_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
                         menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, chartFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, chartFragment.newInstance()).commitNow();
                         return true;
                     case R.id.setMenu:
                         item.setIcon(R.drawable.selected_set_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
                         menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, settingFragment.newInstance()).commitNow();
                         return true;
 
                 }

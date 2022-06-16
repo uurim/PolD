@@ -1,5 +1,6 @@
 package com.example.pold;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,7 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +59,41 @@ public class PolFragment extends Fragment {
         }
     }
 
+    // 필요한 변수 모음
+    TextView txtDatePol;
+
+    // 캘린더 객체 생성
+    Calendar cal = Calendar.getInstance();
+
+    // 데이트피커다이얼로그 생성
+    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            txtDatePol = getView().findViewById(R.id.txtDatePol);
+            txtDatePol.setText(String.format("%d년 %d월", year, month + 1));
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pol, container, false);
+        View v = inflater.inflate(R.layout.fragment_pol, container, false);
+
+        // 날짜를 출력하는 텍스트뷰에 오늘 날짜 설정
+        txtDatePol = v.findViewById(R.id.txtDatePol);
+        txtDatePol.setText(cal.get(Calendar.YEAR) +"년 "+ (cal.get(Calendar.MONTH) + 1) +"월");
+        txtDatePol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), myDatePicker, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        return v;
     }
 }
