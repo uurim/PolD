@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     SettingFragment settingFragment;
 
     WheelView wheelView;
-    int[] images = {R.drawable.cha1_tosun, R.drawable.cha2_bogdol, R.drawable.cha3_bookfox, R.drawable.cha4_devil, R.drawable.cha5_jito,
-            R.drawable.cha6_dolmang, R.drawable.cha7_bora, R.drawable.cha8_mandoo, R.drawable.cha9_doong, R.drawable.cha10_gomg};
+    int[] images = {R.drawable.mood1, R.drawable.mood2, R.drawable.mood3, R.drawable.mood4, R.drawable.mood5,
+            R.drawable.mood6, R.drawable.mood7, R.drawable.mood8, R.drawable.mood9, R.drawable.mood10};
     int size = 10;
 
     NavigationBarView navigationBarView;
