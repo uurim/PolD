@@ -5,14 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.lukedeighton.wheelview.WheelView;
+import com.lukedeighton.wheelview.adapter.WheelAdapter;
+import com.lukedeighton.wheelview.adapter.WheelArrayAdapter;
+
+import android.widget.EditText;
 
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +37,19 @@ public class MainActivity extends AppCompatActivity {
     ChartFragment chartFragment;
     SettingFragment settingFragment;
 
+    WheelView wheelView;
+    int[] images = {R.drawable.cha1_tosun, R.drawable.cha2_bogdol, R.drawable.cha3_bookfox, R.drawable.cha4_devil, R.drawable.cha5_jito,
+            R.drawable.cha6_dolmang, R.drawable.cha7_bora, R.drawable.cha8_mandoo, R.drawable.cha9_doong, R.drawable.cha10_gomg};
+    int size = 10;
+
     NavigationBarView navigationBarView;
     Menu menu;
+
+    EditText editTitle;
+    EditText editDiary;
+    FrameLayout front;
+    FrameLayout back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
         editFragment = new EditFragment();
         chartFragment = new ChartFragment();
         settingFragment = new SettingFragment();
+
+        // EditText
+        editTitle = findViewById(R.id.editTitle);
+        editDiary = findViewById(R.id.editDiary);
+
+        // FrameLayout
+        front = findViewById(R.id.front_card);
+        back = findViewById(R.id.back_card);
 
         //초기 프래그먼트 설정
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, calFragment).commit();
@@ -68,11 +101,16 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, polFragment.newInstance()).commitNow();
                         return true;
                     case R.id.selMenu:
+                        if(wheelView.getVisibility()==View.GONE){
+                            wheelView.setVisibility(View.VISIBLE);
+                        } else {
+                            wheelView.setVisibility(View.GONE);
+                        }
                         menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
                         menu.findItem(R.id.calMenu).setIcon(R.drawable.calendar_icon);
                         menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
                         menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance()).commitNow();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance()).commitNow();
                         return true;
                     case R.id.chartMenu:
                         item.setIcon(R.drawable.selected_chart_icon);
@@ -93,8 +131,75 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // 써클 메뉴
+        wheelView = (WheelView) findViewById(R.id.wheel_view);
+        wheelView.setWheelItemCount(size);
+
+        Drawable[] drawables = new Drawable[size];
+
+        for(int i = 0 ; i < size ; i++){
+            drawables[i] = getDrawable(images[i]);
+        }
+
+        // 메뉴에 아이콘 부착
+        wheelView.setAdapter(new WheelAdapter() {
+            @Override
+            public Drawable getDrawable(int position) {
+                Drawable drawable = drawables[position];
+                return drawable;
+            }
+
+            @Override
+            public int getCount() {
+                return size;
+            }
+        });
+
+        // 아이콘 클릭 시
+        wheelView.setOnWheelItemClickListener(new WheelView.OnWheelItemClickListener() {
+            @Override
+            public void onWheelItemClick(WheelView parent, int position, boolean isSelected) {
+                int color = 0;
+                switch(position){
+                    case 0 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_red);
+                        break;
+                    case 1 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_orange);
+                        break;
+                    case 2 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_realorange);
+                        break;
+                    case 3 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_lemon);
+                        break;
+                    case 4 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_green);
+                        break;
+                    case 5 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_blue);
+                        break;
+                    case 6 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_purple);
+                        break;
+                    case 7 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_pink);
+                        break;
+                    case 8 :
+                        color = getApplicationContext().getResources().getColor(R.color.white);
+                        break;
+                    case 9 :
+                        color = getApplicationContext().getResources().getColor(R.color.pol_brown);
+                        break;
+                }
+                wheelView.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance(color)).commitNow();
+            }
+        });
     }
 
+    // 뒤로가기
     private long lastTimeBackPressed;
 
     @Override
@@ -125,4 +230,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.containers, fragment).commit();
         menu.findItem(R.id.polMenu).setIcon(R.drawable.selected_pol_icon);
     }
+
 }

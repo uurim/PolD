@@ -15,13 +15,42 @@
         android:id="@+id/containers">
     </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:itemBackground="@color/white"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
+        android:id="@+id/menu">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/circle_menu">
+
+            <com.lukedeighton.wheelview.WheelView
+                android:visibility="gone"
+                android:id="@+id/wheel_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:wheelColor="#80FFFFFF"
+                app:rotatableWheelDrawable="false"
+                app:selectionAngle="90.0"
+                app:repeatItems="true"
+                app:wheelRadius="125dp"
+                app:wheelItemRadius="25dp"
+                app:wheelPosition="bottom"
+                app:wheelOffsetY="-40dp"/>
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:visibility="visible"
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:itemBackground="@color/white"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_menu" />
+
+    </FrameLayout>
 
 </LinearLayout>
