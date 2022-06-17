@@ -20,11 +20,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditFragment extends Fragment  implements onBackPressedListener {
 
     private static final String FRAME_COLOR = "color";
