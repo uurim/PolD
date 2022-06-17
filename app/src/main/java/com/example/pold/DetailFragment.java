@@ -1,5 +1,7 @@
 package com.example.pold;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -61,7 +63,6 @@ public class DetailFragment extends Fragment  {
     String title;
     String contents;
     int mood, color;
-    Uri uri;
     String imgName;
 
     FrameLayout front, back;
@@ -143,7 +144,7 @@ public class DetailFragment extends Fragment  {
         imgName = cursor.getString(7);
 
         // 조회된 내용 적용
-        detailDate.setText(year+"년 "+month+"월 "+day+"일");
+        detailDate.setText(year + "년 " + month + "월 " + day + "일");
         detailTitle.setText(title);
         detailDiary.setText(contents);
 
@@ -176,13 +177,22 @@ public class DetailFragment extends Fragment  {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqlDB = dbHelper.getWritableDatabase();
-                sqlDB.execSQL("DELETE FROM diary WHERE code ="+ mcode + ";");
-                sqlDB.close();
+                AlertDialog.Builder deleteDlg = new AlertDialog.Builder(getContext());
+                deleteDlg.setMessage("정말로 일기를 삭제하시겠습니까?");
+                deleteDlg.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sqlDB = dbHelper.getWritableDatabase();
+                        sqlDB.execSQL("DELETE FROM diary WHERE code ="+ mcode + ";");
+                        sqlDB.close();
 
-                // Toast.makeText(getActivity().getApplicationContext(), "지움", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getActivity().getApplicationContext(), "지움", Toast.LENGTH_SHORT).show();
 
-                ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
+                        ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
+                    }
+                });
+                deleteDlg.setNegativeButton("취소", null);
+                deleteDlg.show();
             }
         });
 

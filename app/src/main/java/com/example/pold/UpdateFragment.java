@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class UpdateFragment extends Fragment {
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
 
         // 이미지뷰 가져오기
-        showDiaryImg = v.findViewById(R.id.iconImg);
+        showDiaryImg = v.findViewById(R.id.imgView);
 
         // 에디트텍스트 가져오기
         updateTitle = v.findViewById(R.id.updateTitle);
@@ -138,7 +139,7 @@ public class UpdateFragment extends Fragment {
         });
 
         // select
-        sqlDB = dbHelper.getReadableDatabase();
+        sqlDB = dbHelper.getWritableDatabase();
 
         Cursor cursor;
         cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, imgName FROM diary WHERE code ='"+ mcode + "';", null);
@@ -160,14 +161,16 @@ public class UpdateFragment extends Fragment {
         updateTitle.setText(title);
         updateDiary.setText(contents);
 
-        // 사진 적용 ------------------------------------------------------------------- 여기서 set이 안 됨!!!!!!
+        // 사진 적용
         try {
-            String imgpath = getContext().getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
+            String imgpath = getContext().getCacheDir() + "/" + imgName;
+            // 내부 저장소에 저장되어 있는 이미지 경로
             Bitmap bm = BitmapFactory.decodeFile(imgpath);
             showDiaryImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
             Toast.makeText(getContext().getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext().getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+            Log.e("df", e + "");
         }
 
 
@@ -210,8 +213,8 @@ public class UpdateFragment extends Fragment {
                         + "', year=" + year
                         + ", month=" + month
                         + ", day=" + day
-                        + ", imgName=" + imgName
-                        + " WHERE code = " + mcode);
+                        + ", imgName='" + imgName
+                        + "' WHERE code = " + mcode);
                 sqlDB.close();
 
                 ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
