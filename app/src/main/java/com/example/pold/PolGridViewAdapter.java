@@ -1,6 +1,7 @@
 package com.example.pold;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +47,12 @@ public class PolGridViewAdapter extends BaseAdapter {
         // 이제 아이템이 존재하는 객체들을 view 객체에서 찾아 가져온다
         FrameLayout polItemFrame = (FrameLayout) view.findViewById(R.id.polItem_frame);
         ImageView polItemImg = (ImageView) view.findViewById(R.id.polItem_img);
-        TextView polItemTitle = (TextView) view.findViewById(R.id.polItem_tvTitle);
 
         // 현재 포지션에 해당하는 아이템에 적용하기 위해 list 배열에서 객체를 가져온다
         Diary listData = polList.get(i);
 
         // 가져온 객체안에 있는 데이터들을 각 뷰에 적용한다
-        polItemTitle.setText(listData.getTitle());
+        polItemImg.setImageURI(Uri.parse(listData.getUri()));
 
         // 클릭 시 디테일프래그먼트로 이동
         final int pos = i;
@@ -68,12 +68,11 @@ public class PolGridViewAdapter extends BaseAdapter {
     }
 
     // ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToPolGrid(int code, String title, int mood){
+    public void addItemToPolGrid(int code, String uri){
         Diary listdata = new Diary();
 
         listdata.setCode(code);
-        listdata.setTitle(title);
-        listdata.setMood(mood);
+        listdata.setUri(uri);
 
         //값들의 조립이 완성된 listdata 객체 한개를 list 배열에 추가
         polList.add(listdata);

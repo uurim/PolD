@@ -1,13 +1,19 @@
 package com.example.pold;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,10 +72,13 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     FrameLayout front, back;
     TextView txtDate;
     EditText editTitle, editDiary;
-    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck, imgDiary;
 
     // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
+
+    private static final int PICK_IMAGE = 100;
+    Uri imageUri;
 
     // 데이트피커다이얼로그 생성
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
@@ -151,6 +160,16 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             }
         });
 
+        // 이미지뷰 갤러리에서 가져오기
+        imgDiary = (ImageView) v.findViewById(R.id.iconImg);
+        imgDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, PICK_IMAGE);
+            }
+        });
+
         // DB 입력
         dbHelper = new DiaryDBHelper(getContext());
 
@@ -168,8 +187,8 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                         cal.get(Calendar.YEAR) + ", " +
                         cal.get(Calendar.MONTH) + ", " +
                         cal.get(Calendar.DAY_OF_MONTH) + ", '" +
-                        editDiary.getText().toString() + "', " +
-                        "'uri', " + position + ");");
+                        editDiary.getText().toString() + "', '" +
+                        imageUri + "', " + position + ");");
                 sqlDB.close();
                 Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
@@ -178,27 +197,34 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             }
         });
 
-        // 저장하고
-
-        // 지울 거 : 개발중 DB 초기화 버튼
-        ImageView justRemove = v.findViewById(R.id.iconImg);
-        justRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sqlDB = dbHelper.getWritableDatabase();
-                dbHelper.onUpgrade(sqlDB, 1, 2);
-                sqlDB.close();
-                Toast.makeText(getContext(), "초기화됨", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        // 지울 거 : 개발중 DB 초기화 버튼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        ImageView justRemove = v.findViewById(R.id.iconImg);
+//        justRemove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                sqlDB = dbHelper.getWritableDatabase();
+//                dbHelper.onUpgrade(sqlDB, 1, 2);
+//                sqlDB.close();
+//                Toast.makeText(getContext(), "초기화됨", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            imageUri = data.getData();
+            imgDiary.setImageURI(imageUri);
+        }
     }
 
     // 뒤로가기 : 폴라로이드 리스트로 이동
     @Override
     public void onBackPressed() {
-        ((MainActivity)getActivity()).replaceFragment(PolFragment.newInstance());
+        ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
     }
 
 }

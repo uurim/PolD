@@ -2,16 +2,19 @@ package com.example.pold;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetailFragment extends Fragment  {
 
@@ -45,7 +48,7 @@ public class DetailFragment extends Fragment  {
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    ImageView btnFrontFlip, btnBackFlip, btnBack;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, showDiaryImg;
     TextView detailTitle, detailDiary, detailDate;
     String year;
     int month;
@@ -53,6 +56,7 @@ public class DetailFragment extends Fragment  {
     String title;
     String contents;
     int mood, color;
+    Uri uri;
 
     FrameLayout front, back;
 
@@ -105,12 +109,13 @@ public class DetailFragment extends Fragment  {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
             }
         });
 
         // select
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ pos + "';", null);
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, uri FROM diary WHERE code ='"+ pos + "';", null);
 
         cursor.moveToPosition(0);
         // 변수에 담기
@@ -120,11 +125,14 @@ public class DetailFragment extends Fragment  {
         title = cursor.getString(3);
         contents = cursor.getString(4);
         mood = cursor.getInt(5);
+        uri = Uri.parse(cursor.getString(7));
 
         // 내용 수정
         detailDate.setText(year+"년 "+month+"월 "+day+"일");
         detailTitle.setText(title);
         detailDiary.setText(contents);
+        showDiaryImg = v.findViewById(R.id.iconImg);
+        showDiaryImg.setImageURI(uri);
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
@@ -135,6 +143,5 @@ public class DetailFragment extends Fragment  {
         sqlDB.close();
         return v;
     }
-
 
 }

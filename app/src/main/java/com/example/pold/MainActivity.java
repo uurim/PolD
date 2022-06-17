@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
         //프래그먼트 onBackPressedListener사용
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+
         for(Fragment fragment : fragmentList){
             if(fragment instanceof onBackPressedListener){
                 ((onBackPressedListener)fragment).onBackPressed();
@@ -229,7 +230,10 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.containers, fragment).commitNow();
-        // menu.findItem(R.id.polMenu).setIcon(R.drawable.selected_pol_icon);
+        menu.findItem(R.id.calMenu).setIcon(R.drawable.selected_cal_icon);
+        menu.findItem(R.id.polMenu).setIcon(R.drawable.pol_icon);
+        menu.findItem(R.id.chartMenu).setIcon(R.drawable.chart_icon);
+        menu.findItem(R.id.setMenu).setIcon(R.drawable.setting_icon);
     }
 
 }

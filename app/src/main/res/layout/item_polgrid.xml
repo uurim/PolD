@@ -28,16 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_img" />
-
-                <TextView
-                    android:id="@+id/polItem_tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="일기제목"
-                    android:gravity="center"
-                    android:textSize="20dp" />
 
             </FrameLayout>
 
