@@ -61,16 +61,9 @@
                 </PreferenceScreen>
 
                 <PreferenceScreen
-                        android:title="VERSION"
-                        app:key="ver"
-                        app:summary="v1.0"
-                        app:iconSpaceReserved="false">
-                </PreferenceScreen>
-
-                <PreferenceScreen
                     android:title="앱 버전"
                     app:key="version"
-                    app:summary="1.0.0"
+                    app:summary="v1.0.0"
                     app:iconSpaceReserved="false">
                 </PreferenceScreen>
 
