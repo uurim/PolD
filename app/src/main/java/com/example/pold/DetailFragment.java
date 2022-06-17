@@ -1,7 +1,5 @@
 package com.example.pold;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DetailFragment extends Fragment  {
 
@@ -50,7 +47,11 @@ public class DetailFragment extends Fragment  {
 
     ImageView btnFrontFlip, btnBackFlip, btnBack;
     TextView detailTitle, detailDiary, detailDate;
-    String year, month, day, title, contents;
+    String year;
+    int month;
+    String day;
+    String title;
+    String contents;
     int mood, color;
 
     FrameLayout front, back;
@@ -99,14 +100,22 @@ public class DetailFragment extends Fragment  {
             }
         });
 
+        btnBack = v.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
         // select
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ pos+1 + "';", null);
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ pos + "';", null);
 
         cursor.moveToPosition(0);
         // 변수에 담기
         year = cursor.getString(0);
-        month = cursor.getString(1);
+        month = cursor.getInt(1) + 1;
         day = cursor.getString(2);
         title = cursor.getString(3);
         contents = cursor.getString(4);

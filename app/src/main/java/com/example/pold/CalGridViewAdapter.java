@@ -91,7 +91,7 @@ public class CalGridViewAdapter extends BaseAdapter {
         calItemMood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).replaceFragment(DetailFragment.newInstance(pos));
+                ((MainActivity)context).replaceFragment(DetailFragment.newInstance(listData.getCode()));
                 Toast.makeText(context.getApplicationContext(), pos + " 클릭함", Toast.LENGTH_SHORT).show();
             }
         });
@@ -100,9 +100,10 @@ public class CalGridViewAdapter extends BaseAdapter {
     }
 
     // ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToCalGrid(int mood){
+    public void addItemToCalGrid(int code, int mood){
         Diary listdata = new Diary();
 
+        listdata.setCode(code);
         listdata.setMood(mood);
 
         //값들의 조립이 완성된 listdata 객체 한개를 list 배열에 추가

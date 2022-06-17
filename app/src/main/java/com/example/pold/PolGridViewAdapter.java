@@ -59,7 +59,7 @@ public class PolGridViewAdapter extends BaseAdapter {
         polItemFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).replaceFragment(DetailFragment.newInstance(pos));
+                ((MainActivity)context).replaceFragment(DetailFragment.newInstance(listData.getCode()));
                 Toast.makeText(context.getApplicationContext(), pos + " 클릭함", Toast.LENGTH_SHORT).show();
             }
         });
@@ -68,9 +68,10 @@ public class PolGridViewAdapter extends BaseAdapter {
     }
 
     // ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToPolGrid(String title, int mood){
+    public void addItemToPolGrid(int code, String title, int mood){
         Diary listdata = new Diary();
 
+        listdata.setCode(code);
         listdata.setTitle(title);
         listdata.setMood(mood);
 

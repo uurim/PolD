@@ -120,7 +120,8 @@
                 android:background="#FFFFFF"
                 android:gravity="center"
                 android:hint="일기를 적어주세요 :D"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textSize="20sp"/>
 
         </FrameLayout>
 

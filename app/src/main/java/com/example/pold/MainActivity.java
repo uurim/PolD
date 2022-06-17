@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     // 프래그먼트 이동
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.containers, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.containers, fragment).commitNow();
         // menu.findItem(R.id.polMenu).setIcon(R.drawable.selected_pol_icon);
     }
 

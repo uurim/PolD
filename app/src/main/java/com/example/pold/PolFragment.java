@@ -109,13 +109,13 @@ public class PolFragment extends Fragment {
         sqlDB = dbHelper.getWritableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT title, mood, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
+        cursor = sqlDB.rawQuery("SELECT code, title, mood, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
 
         PolGridViewAdapter adapter = new PolGridViewAdapter();
         polGridView.setAdapter(adapter);
 
         while (cursor.moveToNext()) {
-            adapter.addItemToPolGrid(cursor.getString(0), cursor.getInt(1));
+            adapter.addItemToPolGrid(cursor.getInt(0), cursor.getString(1), cursor.getInt(2));
         }
 
         cursor.close();

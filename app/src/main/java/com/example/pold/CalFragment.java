@@ -95,13 +95,13 @@ public class CalFragment extends Fragment {
         sqlDB = dbHelper.getWritableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT mood, year, month, day FROM diary WHERE year =" + cal.get(Calendar.YEAR) + " AND month =" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
+        cursor = sqlDB.rawQuery("SELECT code, mood, year, month, day FROM diary WHERE year =" + cal.get(Calendar.YEAR) + " AND month =" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
 
         CalGridViewAdapter adapter = new CalGridViewAdapter();
         calGridView.setAdapter(adapter);
 
         while (cursor.moveToNext()) {
-            adapter.addItemToCalGrid(cursor.getInt(0));
+            adapter.addItemToCalGrid(cursor.getInt(0), cursor.getInt(1));
         }
 
         cursor.close();
