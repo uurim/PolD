@@ -23,12 +23,14 @@
                     android:title="글씨체"
                     android:entries="@array/font_list"
                     android:entryValues="@array/action_values"
+                    android:summary="꽃집막내딸"
                     android:dialogTitle="폰트 선택"
                     app:iconSpaceReserved="false"/>
 
                 <ListPreference
                     android:key="back_color"
                     android:title="배경색"
+                    android:summary="파란색"
                     android:entries="@array/back_list"
                     android:entryValues="@array/action_values"
                     android:dialogTitle="색상 선택"

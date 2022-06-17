@@ -148,13 +148,16 @@ public class UpdateFragment extends Fragment {
         DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, month);
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
                 updateDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
             }
         };
+
+        updateDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(), myDatePicker, year, month-1, day).show();
+            }
+        });
 
         // 저장 버튼 클릭
         btnCheck.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +168,7 @@ public class UpdateFragment extends Fragment {
                         + ", year=" +year
                         + ", month=" +month
                         + ", day=" +day, null);
-                ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
-                Toast.makeText(getActivity().getApplicationContext(), mcode + " 수정하기", Toast.LENGTH_SHORT).show();
+                ((MainActivity)getActivity()).replaceFragment(UpdateFragment.newInstance(mcode));
             }
         });
 
