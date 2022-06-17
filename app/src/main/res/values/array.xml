@@ -11,9 +11,4 @@
         <item>회색</item>
     </string-array>
 
-    <string-array name="action_values">
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
 </resources>

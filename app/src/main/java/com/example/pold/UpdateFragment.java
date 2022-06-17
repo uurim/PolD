@@ -159,12 +159,11 @@ public class UpdateFragment extends Fragment {
         // 데이트피커다이얼로그 생성
         DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int yyear, int mmonth, int dday) {
-                updateDate.setText(String.format("%d년 %d월 %d일", yyear, mmonth, dday));
-                // 이거 이상해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(수정중)
-                year = yyear;
-                month = mmonth + 1;
-                day = dday;
+            public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+                updateDate.setText(String.format("%d년 %d월 %d일", y, m + 1, d));
+                year = y;
+                month = m;
+                day = d;
             }
         };
 
@@ -174,13 +173,6 @@ public class UpdateFragment extends Fragment {
                 new DatePickerDialog(getContext(), myDatePicker, year, month, day).show();
             }
         });
-
-//        cal.set(Calendar.YEAR, year);
-//        cal.set(Calendar.MONTH, month);
-//        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//
-//        txtDate = getView().findViewById(R.id.txtDate);
-//        txtDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
 
         // 저장 버튼 클릭
         btnCheck.setOnClickListener(new View.OnClickListener() {

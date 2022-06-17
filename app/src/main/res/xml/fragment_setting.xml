@@ -22,7 +22,7 @@
                     android:key="font_edit"
                     android:title="글씨체"
                     android:entries="@array/font_list"
-                    android:entryValues="@array/action_values"
+                    android:entryValues="@array/font_list"
                     android:summary="꽃집막내딸"
                     android:dialogTitle="폰트 선택"
                     app:iconSpaceReserved="false"/>
@@ -32,7 +32,7 @@
                     android:title="배경색"
                     android:summary="파란색"
                     android:entries="@array/back_list"
-                    android:entryValues="@array/action_values"
+                    android:entryValues="@array/back_list"
                     android:dialogTitle="색상 선택"
                     app:iconSpaceReserved="false"/>
 
@@ -41,16 +41,20 @@
             android:title="POL:D"
             app:iconSpaceReserved="false">
 
-                <Preference
-                    app:title="피드백 보내기"
+                <PreferenceScreen
+                    app:title="FEEDBACK"
                     app:key="feedback"
-                    app:summary="많관부"
-                    app:iconSpaceReserved="false"/>
+                    app:summary="운영자에게 이메일로 피드백을 보내주세요!"
+                    app:iconSpaceReserved="false">
+                        <intent android:action="android.intent.action.SENDTO"
+                            android:data="mailto:urovo77@naver.com" />
+                </PreferenceScreen>
 
 
                 <PreferenceScreen
-                    android:title="인스타그램 방문하기"
+                    android:title="INSTAGRAM"
                     app:key="sns"
+                    app:summary="POL:D의 인스타그램을 방문해보세요."
                     app:iconSpaceReserved="false">
                         <intent android:action="android.intent.action.VIEW"
                             android:data="https://www.instagram.com/u_r.im/" />
