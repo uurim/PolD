@@ -110,7 +110,7 @@ public class PolFragment extends Fragment {
         sqlDB = dbHelper.getReadableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT code, uri, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
+        cursor = sqlDB.rawQuery("SELECT code, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
 
         PolGridViewAdapter adapter = new PolGridViewAdapter();
         polGridView.setAdapter(adapter);
