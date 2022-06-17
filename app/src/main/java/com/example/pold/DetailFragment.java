@@ -49,8 +49,7 @@ public class DetailFragment extends Fragment  {
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    ImageView btnFrontFlip, btnBackFlip, btnBack, showDiaryImg;
-    ImageView btnFrontFlip, btnBackFlip, btnBack, btnEdit, btnDelete;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, btnEdit, btnDelete, showDiaryImg;
     TextView detailTitle, detailDiary, detailDate;
     String year;
     int month;
@@ -70,7 +69,9 @@ public class DetailFragment extends Fragment  {
 
         // DB 접근
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
-        sqlDB = dbHelper.getWritableDatabase();
+
+        // 이미지뷰 가져오기
+        showDiaryImg = v.findViewById(R.id.iconImg);
 
         // 텍스트뷰 가져오기
         detailTitle = v.findViewById(R.id.detailTitle);
@@ -120,11 +121,11 @@ public class DetailFragment extends Fragment  {
         });
 
         // select
-        Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ mcode + "';", null);
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, uri FROM diary WHERE code ='"+ pos + "';", null);
+        sqlDB = dbHelper.getReadableDatabase();
 
-        cursor.moveToPosition(0);
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code,uri FROM diary WHERE code ='"+ mcode + "';", null);
+
         // 변수에 담기
         cursor.moveToPosition(0);
         year = cursor.getString(0);
@@ -139,13 +140,15 @@ public class DetailFragment extends Fragment  {
         detailDate.setText(year+"년 "+month+"월 "+day+"일");
         detailTitle.setText(title);
         detailDiary.setText(contents);
-        showDiaryImg = v.findViewById(R.id.iconImg);
         showDiaryImg.setImageURI(uri);
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
         front.setBackgroundColor(color);
         back.setBackgroundColor(color);
+
+        cursor.close();
+        sqlDB.close();
 
         // 수정 버튼 클릭
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -159,15 +162,16 @@ public class DetailFragment extends Fragment  {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqlDB.rawQuery("DELETE FROM diary WHERE code ='"+ mcode + "';", null);
+                sqlDB = dbHelper.getWritableDatabase();
+                sqlDB.execSQL("DELETE FROM diary WHERE code ="+ mcode + ";");
+                sqlDB.close();
+
+                // Toast.makeText(getActivity().getApplicationContext(), "지움", Toast.LENGTH_SHORT).show();
+
+                ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
             }
         });
 
-        cursor.close();
-        sqlDB.close();
         return v;
     }
-
-
-
 }

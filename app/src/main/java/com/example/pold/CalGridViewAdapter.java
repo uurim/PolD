@@ -93,7 +93,7 @@ public class CalGridViewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 final String tag = "cal";
                 ((MainActivity)context).replaceFragment(DetailFragment.newInstance(listData.getCode()));
-                Toast.makeText(context.getApplicationContext(), pos + " 클릭함", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context.getApplicationContext(), pos + " 클릭함", Toast.LENGTH_SHORT).show();
             }
         });
 

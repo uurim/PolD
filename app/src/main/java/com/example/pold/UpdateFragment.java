@@ -3,6 +3,7 @@ package com.example.pold;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -50,7 +51,7 @@ public class UpdateFragment extends Fragment {
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck, showDiaryImg;
     EditText updateTitle, updateDiary;
     TextView updateDate;
     int year;
@@ -58,7 +59,8 @@ public class UpdateFragment extends Fragment {
     int day;
     String title;
     String contents;
-    int mood, color;
+    int mood, color, code;
+    Uri uri;
 
     FrameLayout front, back;
 
@@ -70,7 +72,9 @@ public class UpdateFragment extends Fragment {
 
         // DB 접근
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
-        sqlDB = dbHelper.getWritableDatabase();
+
+        // 이미지뷰 가져오기
+        showDiaryImg = v.findViewById(R.id.iconImg);
 
         // 에디트텍스트 가져오기
         updateTitle = v.findViewById(R.id.updateTitle);
@@ -119,22 +123,30 @@ public class UpdateFragment extends Fragment {
         });
 
         // select
+        sqlDB = dbHelper.getReadableDatabase();
+
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ mcode + "';", null);
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, uri FROM diary WHERE code ='"+ mcode + "';", null);
 
         // 변수에 담기
         cursor.moveToPosition(0);
         year = cursor.getInt(0);
-        month = cursor.getInt(1) + 1;
+        month = cursor.getInt(1);
         day = cursor.getInt(2);
         title = cursor.getString(3);
         contents = cursor.getString(4);
         mood = cursor.getInt(5);
+        code = cursor.getInt(6);
+        uri = Uri.parse(cursor.getString(7));
+
+        cursor.close();
+        sqlDB.close();
 
         // 조회된 내용 적용
-        updateDate.setText(year+"년 "+month+"월 "+day+"일");
+        updateDate.setText(year + "년 "+ (month + 1) +"월 "+ day + "일");
         updateTitle.setText(title);
         updateDiary.setText(contents);
+        showDiaryImg.setImageURI(uri);
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
@@ -147,33 +159,46 @@ public class UpdateFragment extends Fragment {
         // 데이트피커다이얼로그 생성
         DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                updateDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+            public void onDateSet(DatePicker datePicker, int yyear, int mmonth, int dday) {
+                updateDate.setText(String.format("%d년 %d월 %d일", yyear, mmonth, dday));
+                // 이거 이상해!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(수정중)
+                year = yyear;
+                month = mmonth + 1;
+                day = dday;
             }
         };
 
         updateDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getContext(), myDatePicker, year, month-1, day).show();
+                new DatePickerDialog(getContext(), myDatePicker, year, month, day).show();
             }
         });
+
+//        cal.set(Calendar.YEAR, year);
+//        cal.set(Calendar.MONTH, month);
+//        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//
+//        txtDate = getView().findViewById(R.id.txtDate);
+//        txtDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
 
         // 저장 버튼 클릭
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqlDB.rawQuery("UPDATE diary SET title=" + updateTitle.getText()
-                        + ", contents=" + updateDiary.getText()
-                        + ", year=" +year
-                        + ", month=" +month
-                        + ", day=" +day, null);
-                ((MainActivity)getActivity()).replaceFragment(UpdateFragment.newInstance(mcode));
+                sqlDB = dbHelper.getWritableDatabase();
+                sqlDB.execSQL("UPDATE diary SET title='" + updateTitle.getText()
+                        + "', contents='" + updateDiary.getText()
+                        + "', year=" + year
+                        + ", month=" + month
+                        + ", day=" + day
+                        + " WHERE code = " + mcode);
+                sqlDB.close();
+
+                ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
             }
         });
 
-        cursor.close();
-        sqlDB.close();
         return v;
     }
 

@@ -107,7 +107,7 @@ public class PolFragment extends Fragment {
 
     void showPolGrid() {
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
-        sqlDB = dbHelper.getWritableDatabase();
+        sqlDB = dbHelper.getReadableDatabase();
 
         Cursor cursor;
         cursor = sqlDB.rawQuery("SELECT code, uri, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
