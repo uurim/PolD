@@ -20,7 +20,7 @@ public class DiaryDBHelper extends SQLiteOpenHelper {
                 "'month' INTEGER," +
                 "'day' INTEGER," +
                 "'contents' TEXT," +
-                "'uri' VARCHAR(512)," +
+                "'imgName' VARCHAR(20)," +
                 "'mood' INTEGER);");
     }
 

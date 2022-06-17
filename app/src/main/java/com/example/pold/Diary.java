@@ -1,5 +1,7 @@
 package com.example.pold;
 
+import java.util.Date;
+
 public class Diary {
 
     private int code;
@@ -8,7 +10,7 @@ public class Diary {
     private int month;
     private int day;
     private String contents;
-    private String uri;
+    private String imgName;
     private int mood;
 
     public int getCode() {
@@ -59,12 +61,12 @@ public class Diary {
         this.contents = contents;
     }
 
-    public String getUri() {
-        return uri;
+    public String getImgName() {
+        return imgName;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
     }
 
     public int getMood() {

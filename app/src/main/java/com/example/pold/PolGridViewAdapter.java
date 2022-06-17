@@ -1,6 +1,8 @@
 package com.example.pold;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +54,14 @@ public class PolGridViewAdapter extends BaseAdapter {
         Diary listData = polList.get(i);
 
         // 가져온 객체안에 있는 데이터들을 각 뷰에 적용한다
-        polItemImg.setImageURI(Uri.parse(listData.getUri()));
+        try {
+            String imgpath = context.getCacheDir() + "/" + listData.getImgName();   // 내부 저장소에 저장되어 있는 이미지 경로
+            Bitmap bm = BitmapFactory.decodeFile(imgpath);
+            polItemImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+            Toast.makeText(context.getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context.getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+        }
 
         // 클릭 시 디테일프래그먼트로 이동
         final int pos = i;
@@ -72,7 +81,7 @@ public class PolGridViewAdapter extends BaseAdapter {
         Diary listdata = new Diary();
 
         listdata.setCode(code);
-        listdata.setUri(uri);
+        listdata.setImgName(listdata.getImgName());
 
         //값들의 조립이 완성된 listdata 객체 한개를 list 배열에 추가
         polList.add(listdata);

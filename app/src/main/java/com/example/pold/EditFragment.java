@@ -4,9 +4,12 @@ import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,7 +27,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class EditFragment extends Fragment  implements onBackPressedListener {
 
@@ -68,6 +76,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     TextView txtDate;
     EditText editTitle, editDiary;
     ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck, imgDiary;
+    String imgName;
 
     // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
@@ -183,7 +192,8 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                         cal.get(Calendar.MONTH) + ", " +
                         cal.get(Calendar.DAY_OF_MONTH) + ", '" +
                         editDiary.getText().toString() + "', '" +
-                        imageUri + "', " + position + ");");
+                        imgName + "', "+
+                        position + ");");
                 sqlDB.close();
                 Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
@@ -210,9 +220,44 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            imageUri = data.getData();
-            imgDiary.setImageURI(imageUri);
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+                ContentResolver resolver = getContext().getContentResolver();
+                try {
+                    InputStream instream = resolver.openInputStream(uri);
+                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    imgDiary.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                    instream.close();   // 스트림 닫아주기
+                    Toast.makeText(getContext(), "파일 불러오는 중", Toast.LENGTH_SHORT).show();
+                    saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
+                    Toast.makeText(getContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    private String dateName(long dateTaken){
+        Date date = new Date(dateTaken);
+        SimpleDateFormat dateFormat =
+                new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+        return dateFormat.format(date);
+    }
+
+    public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
+        long now = System.currentTimeMillis();
+        imgName = dateName(now);
+        File tempFile = new File(getContext().getCacheDir(), imgName);   // 파일 경로와 이름 넣기
+        try {
+            tempFile.createNewFile();   // 자동으로 빈 파일을 생성하기
+            FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);   // compress 함수를 사용해 스트림에 비트맵을 저장하기
+            out.close();    // 스트림 닫아주기
+            Toast.makeText(getContext().getApplicationContext(), "파일 저장 성공", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext().getApplicationContext(), "파일 저장 실패", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -2,6 +2,8 @@ package com.example.pold;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 public class DetailFragment extends Fragment  {
 
@@ -58,6 +62,7 @@ public class DetailFragment extends Fragment  {
     String contents;
     int mood, color;
     Uri uri;
+    String imgName;
 
     FrameLayout front, back;
 
@@ -89,6 +94,7 @@ public class DetailFragment extends Fragment  {
         // 수정 삭제 버튼 가져오기
         btnEdit = v.findViewById(R.id.btnEdit);
         btnDelete = v.findViewById(R.id.btnDelete);
+
 
         //flip
         btnFrontFlip.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +130,7 @@ public class DetailFragment extends Fragment  {
         sqlDB = dbHelper.getReadableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code,uri FROM diary WHERE code ='"+ mcode + "';", null);
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, imgName FROM diary WHERE code ='"+ mcode + "';", null);
 
         // 변수에 담기
         cursor.moveToPosition(0);
@@ -134,13 +140,21 @@ public class DetailFragment extends Fragment  {
         title = cursor.getString(3);
         contents = cursor.getString(4);
         mood = cursor.getInt(5);
-        uri = Uri.parse(cursor.getString(7));
+        imgName = cursor.getString(7);
 
         // 조회된 내용 적용
         detailDate.setText(year+"년 "+month+"월 "+day+"일");
         detailTitle.setText(title);
         detailDiary.setText(contents);
-        showDiaryImg.setImageURI(uri);
+
+        try {
+            String imgpath = getContext().getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
+            Bitmap bm = BitmapFactory.decodeFile(imgpath);
+            showDiaryImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+            Toast.makeText(getContext().getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext().getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+        }
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
@@ -174,4 +188,5 @@ public class DetailFragment extends Fragment  {
 
         return v;
     }
+
 }

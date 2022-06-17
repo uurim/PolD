@@ -1,13 +1,20 @@
 package com.example.pold;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +24,13 @@ import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class UpdateFragment extends Fragment {
 
@@ -60,9 +73,11 @@ public class UpdateFragment extends Fragment {
     String title;
     String contents;
     int mood, color, code;
-    Uri uri;
+    String imgName;
 
     FrameLayout front, back;
+
+    private static final int PICK_IMAGE = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,7 +141,7 @@ public class UpdateFragment extends Fragment {
         sqlDB = dbHelper.getReadableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, uri FROM diary WHERE code ='"+ mcode + "';", null);
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, imgName FROM diary WHERE code ='"+ mcode + "';", null);
 
         // 변수에 담기
         cursor.moveToPosition(0);
@@ -137,16 +152,24 @@ public class UpdateFragment extends Fragment {
         contents = cursor.getString(4);
         mood = cursor.getInt(5);
         code = cursor.getInt(6);
-        uri = Uri.parse(cursor.getString(7));
+        imgName = cursor.getString(7);
 
-        cursor.close();
-        sqlDB.close();
 
         // 조회된 내용 적용
         updateDate.setText(year + "년 "+ (month + 1) +"월 "+ day + "일");
         updateTitle.setText(title);
         updateDiary.setText(contents);
-        showDiaryImg.setImageURI(uri);
+
+        // 사진 적용 ------------------------------------------------------------------- 여기서 set이 안 됨!!!!!!
+        try {
+            String imgpath = getContext().getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
+            Bitmap bm = BitmapFactory.decodeFile(imgpath);
+            showDiaryImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+            Toast.makeText(getContext().getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext().getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+        }
+
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
@@ -174,6 +197,9 @@ public class UpdateFragment extends Fragment {
             }
         });
 
+        cursor.close();
+        sqlDB.close();
+
         // 저장 버튼 클릭
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +210,7 @@ public class UpdateFragment extends Fragment {
                         + "', year=" + year
                         + ", month=" + month
                         + ", day=" + day
+                        + ", imgName=" + imgName
                         + " WHERE code = " + mcode);
                 sqlDB.close();
 
@@ -193,6 +220,5 @@ public class UpdateFragment extends Fragment {
 
         return v;
     }
-
 
 }
