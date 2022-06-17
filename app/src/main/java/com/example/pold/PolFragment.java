@@ -1,8 +1,10 @@
 package com.example.pold;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,10 +12,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -61,7 +67,15 @@ public class PolFragment extends Fragment {
 
     // 필요한 변수 모음
     View v;
+
+    GridView polGridView;
+
+    DiaryDBHelper dbHelper;
+    SQLiteDatabase sqlDB;
+
     TextView txtDatePol;
+
+    ArrayList<Integer> moodID = null;
 
     // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
@@ -95,6 +109,28 @@ public class PolFragment extends Fragment {
             }
         });
 
+        // 그리드 뷰
+        polGridView = v.findViewById(R.id.polGridView);
+        showPolGrid();
+
         return v;
+    }
+
+    void showPolGrid() {
+        dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
+        sqlDB = dbHelper.getWritableDatabase();
+
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT title, mood FROM diary;", null);
+
+        PolGridViewAdapter adapter = new PolGridViewAdapter();
+        polGridView.setAdapter(adapter);
+
+        while (cursor.moveToNext()) {
+            adapter.addItemToPolGrid(cursor.getString(0),cursor.getInt(1));
+        }
+
+        cursor.close();
+        sqlDB.close();
     }
 }
