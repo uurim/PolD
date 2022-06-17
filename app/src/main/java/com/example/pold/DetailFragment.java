@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -149,12 +150,18 @@ public class DetailFragment extends Fragment  {
         detailDiary.setText(contents);
 
         try {
-            String imgpath = getContext().getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
-            Bitmap bm = BitmapFactory.decodeFile(imgpath);
-            showDiaryImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
-            Toast.makeText(getContext().getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+            if (imgName.equals("null")) {
+                Drawable draw = getResources().getDrawable(R.drawable.ic_noimg);
+                showDiaryImg.setImageDrawable(draw);
+            } else {
+                // Toast.makeText(getContext().getApplicationContext(), imgName + "", Toast.LENGTH_SHORT).show();
+                String imgpath = getContext().getCacheDir() + "/" + imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
+                Bitmap bm = BitmapFactory.decodeFile(imgpath);
+                showDiaryImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+                // Toast.makeText(getContext().getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
-            Toast.makeText(getContext().getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext().getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
         }
 
         // 무드에 따라 프레임 색 변경

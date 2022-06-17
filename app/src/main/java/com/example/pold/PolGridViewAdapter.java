@@ -1,8 +1,11 @@
 package com.example.pold;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,12 +58,17 @@ public class PolGridViewAdapter extends BaseAdapter {
 
         // 가져온 객체안에 있는 데이터들을 각 뷰에 적용한다
         try {
-            String imgpath = context.getCacheDir() + "/" + listData.getImgName();   // 내부 저장소에 저장되어 있는 이미지 경로
-            Bitmap bm = BitmapFactory.decodeFile(imgpath);
-            polItemImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
-            Toast.makeText(context.getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+            if (listData.getImgName().equals("null")) {
+                Drawable draw = context.getResources().getDrawable(R.drawable.ic_noimg);
+                polItemImg.setImageDrawable(draw);
+            } else {
+                String imgpath = context.getCacheDir() + "/" + listData.getImgName();   // 내부 저장소에 저장되어 있는 이미지 경로
+                Bitmap bm = BitmapFactory.decodeFile(imgpath);
+                polItemImg.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+                // Toast.makeText(context.getApplicationContext(), "파일 로드 성공", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
-            Toast.makeText(context.getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(context.getApplicationContext(), "파일 로드 실패", Toast.LENGTH_SHORT).show();
         }
 
         // 클릭 시 디테일프래그먼트로 이동
@@ -77,11 +85,11 @@ public class PolGridViewAdapter extends BaseAdapter {
     }
 
     // ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToPolGrid(int code, String uri){
+    public void addItemToPolGrid(int code, String imgName){
         Diary listdata = new Diary();
 
         listdata.setCode(code);
-        listdata.setImgName(listdata.getImgName());
+        listdata.setImgName(imgName);
 
         //값들의 조립이 완성된 listdata 객체 한개를 list 배열에 추가
         polList.add(listdata);

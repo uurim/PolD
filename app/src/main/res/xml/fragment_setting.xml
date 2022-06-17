@@ -37,6 +37,7 @@
                     app:iconSpaceReserved="false"/>
 
         </PreferenceCategory>
+
         <PreferenceCategory
             android:title="POL:D"
             app:iconSpaceReserved="false">
@@ -50,7 +51,6 @@
                             android:data="mailto:urovo77@naver.com" />
                 </PreferenceScreen>
 
-
                 <PreferenceScreen
                     android:title="INSTAGRAM"
                     app:key="sns"
@@ -60,5 +60,13 @@
                             android:data="https://www.instagram.com/u_r.im/" />
                 </PreferenceScreen>
 
+                <PreferenceScreen
+                    android:title="앱 버전"
+                    app:key="version"
+                    app:summary="1.0.0"
+                    app:iconSpaceReserved="false">
+                </PreferenceScreen>
+
         </PreferenceCategory>
+
 </PreferenceScreen>

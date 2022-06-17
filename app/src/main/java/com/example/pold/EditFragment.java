@@ -195,7 +195,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                         imgName + "', "+
                         position + ");");
                 sqlDB.close();
-                Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getContext(), "입력됨", Toast.LENGTH_SHORT).show();
 
                 // 폴라로이드 리스트로 이동
                 onBackPressed();
@@ -229,11 +229,11 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
                     imgDiary.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
-                    Toast.makeText(getContext(), "파일 불러오는 중", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "사진 불러오는 중", Toast.LENGTH_SHORT).show();
                     saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
-                    Toast.makeText(getContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -255,9 +255,9 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);   // compress 함수를 사용해 스트림에 비트맵을 저장하기
             out.close();    // 스트림 닫아주기
-            Toast.makeText(getContext().getApplicationContext(), "파일 저장 성공", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext().getApplicationContext(), "파일 저장 성공", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(getContext().getApplicationContext(), "파일 저장 실패", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getContext().getApplicationContext(), "파일 저장 실패", Toast.LENGTH_SHORT).show();
         }
     }
 
