@@ -3,8 +3,10 @@ package com.example.pold;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -201,17 +203,33 @@ public class UpdateFragment extends Fragment {
             }
         });
 
-        showDiaryImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(gallery,PICK_IMAGE);
-            }
-        });
-
+        // 수정 추후 업데이트
+//        showDiaryImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//                startActivityForResult(gallery,PICK_IMAGE);
+//            }
+//        });
 
         cursor.close();
         sqlDB.close();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder backDlg = new AlertDialog.Builder(getContext());
+                backDlg.setMessage("수정된 내용이 저장되지 않습니다.\n뒤로 가시겠습니까?");
+                backDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
+                    }
+                });
+                backDlg.setNegativeButton("취소", null);
+                backDlg.show();
+            }
+        });
 
         // 저장 버튼 클릭
         btnCheck.setOnClickListener(new View.OnClickListener() {
