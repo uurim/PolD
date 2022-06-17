@@ -1,5 +1,6 @@
 package com.example.pold;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.DatePickerDialog;
@@ -199,6 +200,15 @@ public class UpdateFragment extends Fragment {
                 new DatePickerDialog(getContext(), myDatePicker, year, month, day).show();
             }
         });
+
+        showDiaryImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(gallery,PICK_IMAGE);
+            }
+        });
+
 
         cursor.close();
         sqlDB.close();

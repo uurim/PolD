@@ -82,7 +82,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
     Calendar cal = Calendar.getInstance();
 
     private static final int PICK_IMAGE = 100;
-    Uri imageUri;
 
     // 데이트피커다이얼로그 생성
     DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {

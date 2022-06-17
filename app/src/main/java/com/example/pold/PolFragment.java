@@ -23,23 +23,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PolFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PolFragment extends Fragment {
 
     public PolFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment PlFragment.
-     */
     public static PolFragment newInstance() {
         PolFragment fragment = new PolFragment();
         Bundle args = new Bundle();

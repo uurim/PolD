@@ -48,7 +48,7 @@
                     app:summary="운영자에게 이메일로 피드백을 보내주세요!"
                     app:iconSpaceReserved="false">
                         <intent android:action="android.intent.action.SENDTO"
-                            android:data="mailto:urovo77@naver.com" />
+                            android:data="mailto:2022pold@gmail.com" />
                 </PreferenceScreen>
 
                 <PreferenceScreen
@@ -57,7 +57,14 @@
                     app:summary="POL:D의 인스타그램을 방문해보세요."
                     app:iconSpaceReserved="false">
                         <intent android:action="android.intent.action.VIEW"
-                            android:data="https://www.instagram.com/u_r.im/" />
+                            android:data="https://www.instagram.com/pol.d__/" />
+                </PreferenceScreen>
+
+                <PreferenceScreen
+                        android:title="VERSION"
+                        app:key="ver"
+                        app:summary="v1.0"
+                        app:iconSpaceReserved="false">
                 </PreferenceScreen>
 
                 <PreferenceScreen
