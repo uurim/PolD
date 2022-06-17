@@ -8,6 +8,7 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,5 +121,11 @@ public class PolFragment extends Fragment {
 
         cursor.close();
         sqlDB.close();
+    }
+
+
+    public void replaceFragment(Fragment fragment) {
+        ((MainActivity)getActivity()).replaceFragment(fragment);
+        // menu.findItem(R.id.polMenu).setIcon(R.drawable.selected_pol_icon);
     }
 }

@@ -1,34 +1,35 @@
 package com.example.pold;
 
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Calendar;
 
-public class DetailFragment extends Fragment  {
+public class UpdateFragment extends Fragment {
 
     private static final String MOOD_CODE = "mcode";
 
     private int mcode;
 
-    public DetailFragment() {
+    public UpdateFragment() {
         // Required empty public constructor
     }
 
-    public static DetailFragment newInstance(int mcode) {
-        DetailFragment fragment = new DetailFragment();
+    public static UpdateFragment newInstance(int mcode) {
+        UpdateFragment fragment = new UpdateFragment();
         Bundle args = new Bundle();
         args.putInt(MOOD_CODE, mcode);
         fragment.setArguments(args);
@@ -49,16 +50,15 @@ public class DetailFragment extends Fragment  {
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    ImageView btnFrontFlip, btnBackFlip, btnBack, showDiaryImg;
-    ImageView btnFrontFlip, btnBackFlip, btnBack, btnEdit, btnDelete;
-    TextView detailTitle, detailDiary, detailDate;
-    String year;
+    ImageView btnFrontFlip, btnBackFlip, btnBack, btnCheck;
+    EditText updateTitle, updateDiary;
+    TextView updateDate;
+    int year;
     int month;
-    String day;
+    int day;
     String title;
     String contents;
     int mood, color;
-    Uri uri;
 
     FrameLayout front, back;
 
@@ -66,16 +66,16 @@ public class DetailFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_detail, container, false);
+        v = inflater.inflate(R.layout.fragment_update, container, false);
 
         // DB 접근
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
         sqlDB = dbHelper.getWritableDatabase();
 
-        // 텍스트뷰 가져오기
-        detailTitle = v.findViewById(R.id.detailTitle);
-        detailDiary = v.findViewById(R.id.detailDiary);
-        detailDate = v.findViewById(R.id.detailDate);
+        // 에디트텍스트 가져오기
+        updateTitle = v.findViewById(R.id.updateTitle);
+        updateDiary = v.findViewById(R.id.updateDiary);
+        updateDate = v.findViewById(R.id.updateDate);
 
         // 프레임 가져오기
         front = v.findViewById(R.id.front_card);
@@ -85,9 +85,9 @@ public class DetailFragment extends Fragment  {
         btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
         btnBackFlip = v.findViewById(R.id.btnBackFlip);
 
-        // 수정 삭제 버튼 가져오기
-        btnEdit = v.findViewById(R.id.btnEdit);
-        btnDelete = v.findViewById(R.id.btnDelete);
+        // 취소, 저장 버튼 가져오기
+        btnBack = v.findViewById(R.id.iconCancel);
+        btnCheck = v.findViewById(R.id.iconCheck);
 
         //flip
         btnFrontFlip.setOnClickListener(new View.OnClickListener() {
@@ -110,56 +110,63 @@ public class DetailFragment extends Fragment  {
             }
         });
 
-        btnBack = v.findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).replaceFragment(CalFragment.newInstance());
+                DetailFragment.newInstance(mcode);
             }
         });
 
         // select
         Cursor cursor;
         cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ mcode + "';", null);
-        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code, uri FROM diary WHERE code ='"+ pos + "';", null);
 
-        cursor.moveToPosition(0);
         // 변수에 담기
         cursor.moveToPosition(0);
-        year = cursor.getString(0);
+        year = cursor.getInt(0);
         month = cursor.getInt(1) + 1;
-        day = cursor.getString(2);
+        day = cursor.getInt(2);
         title = cursor.getString(3);
         contents = cursor.getString(4);
         mood = cursor.getInt(5);
-        uri = Uri.parse(cursor.getString(7));
 
         // 조회된 내용 적용
-        detailDate.setText(year+"년 "+month+"월 "+day+"일");
-        detailTitle.setText(title);
-        detailDiary.setText(contents);
-        showDiaryImg = v.findViewById(R.id.iconImg);
-        showDiaryImg.setImageURI(uri);
+        updateDate.setText(year+"년 "+month+"월 "+day+"일");
+        updateTitle.setText(title);
+        updateDiary.setText(contents);
 
         // 무드에 따라 프레임 색 변경
         color = ((MainActivity)getActivity()).changeMoodColor(mood);
         front.setBackgroundColor(color);
         back.setBackgroundColor(color);
 
-        // 수정 버튼 클릭
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).replaceFragment(UpdateFragment.newInstance(mcode));
-            }
-        });
+        // 캘린더 객체 생성
+        Calendar cal = Calendar.getInstance();
 
-        // 삭제 버튼 클릭
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        // 데이트피커다이얼로그 생성
+        DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateDate.setText(String.format("%d년 %d월 %d일", year, month + 1, dayOfMonth));
+            }
+        };
+
+        // 저장 버튼 클릭
+        btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqlDB.rawQuery("DELETE FROM diary WHERE code ='"+ mcode + "';", null);
+                sqlDB.rawQuery("UPDATE diary SET title=" + updateTitle.getText()
+                        + ", contents=" + updateDiary.getText()
+                        + ", year=" +year
+                        + ", month=" +month
+                        + ", day=" +day, null);
+                ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
+                Toast.makeText(getActivity().getApplicationContext(), mcode + " 수정하기", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -167,7 +174,6 @@ public class DetailFragment extends Fragment  {
         sqlDB.close();
         return v;
     }
-
 
 
 }

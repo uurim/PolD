@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DetailFragment">
+    tools:context=".UpdateFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/btnBack"
+            android:id="@+id/iconCancel"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_weight="1"
@@ -25,13 +24,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="8"
             android:orientation="horizontal" />
+
+        <ImageView
+            android:id="@+id/iconCheck"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_check" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/detailDate"
+        android:id="@+id/updateDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -69,14 +75,14 @@
                     android:id="@+id/iconImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
+                    android:scaleType="center"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_img" />
 
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/detailTitle"
+            <EditText
+                android:id="@+id/updateTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
@@ -86,6 +92,7 @@
                 android:background="@null"
                 android:ems="20"
                 android:gravity="center_horizontal"
+                android:inputType="text"
                 android:textSize="20sp" />
 
         </FrameLayout>
@@ -100,8 +107,8 @@
             android:layout_weight="1"
             android:background="#FFFFFF">
 
-            <TextView
-                android:id="@+id/detailDiary"
+            <EditText
+                android:id="@+id/updateDiary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
@@ -110,56 +117,28 @@
                 android:layout_marginBottom="40dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
+                android:inputType="text"
                 android:textSize="20sp"/>
 
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+        <ImageView
+            android:visibility="visible"
+            android:id="@+id/btnFrontFlip"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_flip_front"
+            android:layout_marginBottom="80dp"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="left">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_edit"
-                    android:id="@+id/btnEdit"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="10dp"/>
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_delete"
-                    android:id="@+id/btnDelete"/>
-            </LinearLayout>
-
-                <ImageView
-                    android:visibility="visible"
-                    android:id="@+id/btnFrontFlip"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_flip_front"
-                    android:layout_marginBottom="80dp"
-                    android:layout_gravity="right"/>
-
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/btnBackFlip"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right"
-                    android:src="@drawable/ic_flip_back"
-                    android:layout_marginBottom="80dp"/>
-
-
-        </FrameLayout>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/btnBackFlip"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_flip_back"
+            android:layout_marginBottom="80dp"/>
 
     </LinearLayout>
 
