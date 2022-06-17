@@ -1,5 +1,9 @@
 package com.example.pold;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,37 +11,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment  {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String POS_CODE = "pos";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int pos;
 
     public DetailFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment DetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailFragment newInstance() {
+    public static DetailFragment newInstance(int pos) {
         DetailFragment fragment = new DetailFragment();
         Bundle args = new Bundle();
+        args.putInt(POS_CODE, pos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,15 +38,94 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            pos = getArguments().getInt(POS_CODE);
         }
     }
+
+    // 필요한 변수 모음
+    View v;
+
+    DiaryDBHelper dbHelper;
+    SQLiteDatabase sqlDB;
+
+    ImageView btnFrontFlip, btnBackFlip, btnBack;
+    TextView detailTitle, detailDiary, detailDate;
+    String year, month, day, title, contents;
+    int mood, color;
+
+    FrameLayout front, back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false);
+        v = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        // DB 접근
+        dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
+        sqlDB = dbHelper.getWritableDatabase();
+
+        // 텍스트뷰 가져오기
+        detailTitle = v.findViewById(R.id.detailTitle);
+        detailDiary = v.findViewById(R.id.detailDiary);
+        detailDate = v.findViewById(R.id.detailDate);
+
+        // 프레임 가져오기
+        front = v.findViewById(R.id.front_card);
+        back = v.findViewById(R.id.back_card);
+
+        // 플립 아이콘 가져오기
+        btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
+        btnBackFlip = v.findViewById(R.id.btnBackFlip);
+
+        //flip
+        btnFrontFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                front.setVisibility(View.GONE);
+                back.setVisibility(View.VISIBLE);
+                btnFrontFlip.setVisibility(View.GONE);
+                btnBackFlip.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnBackFlip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back.setVisibility(View.GONE);
+                front.setVisibility(View.VISIBLE);
+                btnBackFlip.setVisibility(View.GONE);
+                btnFrontFlip.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // select
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT year, month, day, title, contents, mood, code FROM diary WHERE code ='"+ pos+1 + "';", null);
+
+        cursor.moveToPosition(0);
+        // 변수에 담기
+        year = cursor.getString(0);
+        month = cursor.getString(1);
+        day = cursor.getString(2);
+        title = cursor.getString(3);
+        contents = cursor.getString(4);
+        mood = cursor.getInt(5);
+
+        // 내용 수정
+        detailDate.setText(year+"년 "+month+"월 "+day+"일");
+        detailTitle.setText(title);
+        detailDiary.setText(contents);
+
+        // 무드에 따라 프레임 색 변경
+        color = ((MainActivity)getActivity()).changeMoodColor(mood);
+        front.setBackgroundColor(color);
+        back.setBackgroundColor(color);
+
+        cursor.close();
+        sqlDB.close();
+        return v;
     }
+
+
 }

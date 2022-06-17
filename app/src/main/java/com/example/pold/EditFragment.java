@@ -37,13 +37,6 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment EditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static EditFragment newInstance(int color, int position) {
         EditFragment fragment = new EditFragment();
         Bundle args = new Bundle();
@@ -104,7 +97,9 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
 
         // color 설정
         front.setBackgroundColor(color);
+        back.setBackgroundColor(color);
 
+        // flip
         btnFrontFlip = v.findViewById(R.id.btnFrontFlip);
         btnBackFlip = v.findViewById(R.id.btnBackFlip);
 

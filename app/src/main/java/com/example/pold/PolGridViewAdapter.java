@@ -59,7 +59,7 @@ public class PolGridViewAdapter extends BaseAdapter {
         polItemFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).replaceFragment(DetailFragment.newInstance());
+                ((MainActivity)context).replaceFragment(DetailFragment.newInstance(pos));
                 Toast.makeText(context.getApplicationContext(), pos + " 클릭함", Toast.LENGTH_SHORT).show();
             }
         });

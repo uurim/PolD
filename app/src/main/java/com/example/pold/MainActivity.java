@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,15 +15,12 @@ import android.widget.Toast;
 
 import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelAdapter;
-import com.lukedeighton.wheelview.adapter.WheelArrayAdapter;
 
 import android.widget.EditText;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -160,43 +154,50 @@ public class MainActivity extends AppCompatActivity {
         wheelView.setOnWheelItemClickListener(new WheelView.OnWheelItemClickListener() {
             @Override
             public void onWheelItemClick(WheelView parent, int position, boolean isSelected) {
-                int color = 0;
-                switch(position){
-                    case 0 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_red);
-                        break;
-                    case 1 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_orange);
-                        break;
-                    case 2 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_realorange);
-                        break;
-                    case 3 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_lemon);
-                        break;
-                    case 4 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_green);
-                        break;
-                    case 5 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_blue);
-                        break;
-                    case 6 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_purple);
-                        break;
-                    case 7 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_pink);
-                        break;
-                    case 8 :
-                        color = getApplicationContext().getResources().getColor(R.color.white);
-                        break;
-                    case 9 :
-                        color = getApplicationContext().getResources().getColor(R.color.pol_brown);
-                        break;
-                }
+                int color = changeMoodColor(position);
                 wheelView.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.containers, editFragment.newInstance(color, position)).commitNow();
             }
         });
+    }
+
+    public int changeMoodColor(int pos){
+        int color=0;
+        switch(pos){
+            case 0 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_red);
+                break;
+            case 1 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_orange);
+                break;
+            case 2 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_realorange);
+                break;
+            case 3 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_lemon);
+                break;
+            case 4 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_green);
+                break;
+            case 5 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_blue);
+                break;
+            case 6 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_purple);
+                break;
+            case 7 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_pink);
+                break;
+            case 8 :
+                color = getApplicationContext().getResources().getColor(R.color.white);
+                break;
+            case 9 :
+                color = getApplicationContext().getResources().getColor(R.color.pol_brown);
+                break;
+            default:
+                break;
+        }
+        return color;
     }
 
     // 뒤로가기
