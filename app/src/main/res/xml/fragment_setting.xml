@@ -9,6 +9,7 @@
                 <SwitchPreference
                     android:key="notice_switch"
                     android:title="알림"
+                    android:summary="보낼 일은 없지만 언젠가 보낸다면 받아주세요 :D"
                     android:defaultValue="true"
                     app:iconSpaceReserved="false"/>
 

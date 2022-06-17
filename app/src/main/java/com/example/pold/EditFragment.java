@@ -228,7 +228,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
                     imgDiary.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
-                    Toast.makeText(getContext(), "사진 불러오는 중", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "사진을 불러오고 있어요 :D", Toast.LENGTH_SHORT).show();
                     saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
                     // Toast.makeText(getContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
