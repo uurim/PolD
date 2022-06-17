@@ -53,7 +53,7 @@ public class Diary {
         return mood;
     }
 
-    public void setMood(int Mood) {
+    public void setMood(int mood) {
         this.mood = mood;
     }
 }

@@ -113,7 +113,7 @@ public class PolFragment extends Fragment {
         polGridView.setAdapter(adapter);
 
         while (cursor.moveToNext()) {
-            adapter.addItemToPolGrid(cursor.getString(0),cursor.getInt(1));
+            adapter.addItemToPolGrid(cursor.getString(0), cursor.getInt(1));
         }
 
         cursor.close();

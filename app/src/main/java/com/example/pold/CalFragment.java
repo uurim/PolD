@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -61,10 +62,12 @@ public class CalFragment extends Fragment {
     // 필요한 변수 모음
     View v;
 
+    GridView calGridView;
+
     DiaryDBHelper dbHelper;
     SQLiteDatabase sqlDB;
 
-    TextView txtDateCal, dbCode, dbTitle, dbDate, dbDiary, dbMood;
+    TextView txtDateCal;
 
     // 캘린더 객체 생성
     Calendar cal = Calendar.getInstance();
@@ -98,40 +101,28 @@ public class CalFragment extends Fragment {
             }
         });
 
+        // 그리드 뷰
+        calGridView = v.findViewById(R.id.calGridView);
+        showCalGrid();
+
+        return v;
+    }
+
+    void showCalGrid() {
         dbHelper = new DiaryDBHelper(getActivity().getApplicationContext());
         sqlDB = dbHelper.getWritableDatabase();
 
-        dbCode = v.findViewById(R.id.dbCode);
-        dbTitle = v.findViewById(R.id.dbTitle);
-        dbDate = v.findViewById(R.id.dbDate);
-        dbDiary = v.findViewById(R.id.dbDiary);
-        dbMood = v.findViewById(R.id.dbMood);
+        Cursor cursor;
+        cursor = sqlDB.rawQuery("SELECT mood, date FROM diary;", null);
 
-        Cursor cursor = sqlDB.rawQuery("SELECT code, title, date, contents, mood FROM diary;", null);
-
-        String strCode = "코드" + "\r\n" + "_______" + "\r\n";
-        String strTitle = "제목" + "\r\n" + "_______" + "\r\n";
-        String strDate = "날짜" + "\r\n" + "_______" + "\r\n";
-        String strDiary = "일기" + "\r\n" + "_______" + "\r\n";
-        String strMood = "감정" + "\r\n" + "_______" + "\r\n";
+        CalGridViewAdapter adapter = new CalGridViewAdapter();
+        calGridView.setAdapter(adapter);
 
         while (cursor.moveToNext()) {
-            strCode += cursor.getString(0) + "\r\n";
-            strTitle += cursor.getString(1) + "\r\n";
-            strDate += cursor.getString(2) + "\r\n";
-            strDiary += cursor.getString(3) + "\r\n";
-            strMood += cursor.getString(4) + "\r\n";
+            adapter.addItemToCalGrid(cursor.getInt(0));
         }
-
-        dbCode.setText(strCode);
-        dbTitle.setText(strTitle);
-        dbDate.setText(strDate);
-        dbDiary.setText(strDiary);
-        dbMood.setText(strMood);
 
         cursor.close();
         sqlDB.close();
-
-        return v;
     }
 }

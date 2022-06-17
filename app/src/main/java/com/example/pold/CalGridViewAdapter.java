@@ -1,29 +1,29 @@
 package com.example.pold;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class PolGridViewAdapter extends BaseAdapter {
+public class CalGridViewAdapter extends BaseAdapter {
 
-    ArrayList<Diary> polList = new ArrayList<Diary>();
+    ArrayList<Diary> calList = new ArrayList<Diary>();
 
     @Override
     public int getCount() {
-        return polList.size();
+        return calList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return polList.get(i);
+        return calList.get(i);
     }
 
     @Override
@@ -40,23 +40,55 @@ public class PolGridViewAdapter extends BaseAdapter {
         // 아이템이 없다면 아래처럼 아이템 레이아웃을 인플레이트하고 view 객체에 담는다
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item_polgrid, viewGroup, false);
+            view = inflater.inflate(R.layout.item_calgrid, viewGroup, false);
         }
 
         // 이제 아이템이 존재하는 객체들을 view 객체에서 찾아 가져온다
-        FrameLayout polItemFrame = (FrameLayout) view.findViewById(R.id.polItem_frame);
-        ImageView polItemImg = (ImageView) view.findViewById(R.id.polItem_img);
-        TextView polItemTitle = (TextView) view.findViewById(R.id.polItem_tvTitle);
+        ImageView calItemMood = (ImageView) view.findViewById(R.id.calItem_Mood);
 
         // 현재 포지션에 해당하는 아이템에 적용하기 위해 list 배열에서 객체를 가져온다
-        Diary listData = polList.get(i);
+        Diary listData = calList.get(i);
+
+        Drawable moodNum = null;
+        switch(listData.getMood()) {
+            case 0 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood1);
+                break;
+            case 1 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood2);
+                break;
+            case 2 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood3);
+                break;
+            case 3 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood4);
+                break;
+            case 4 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood5);
+                break;
+            case 5 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood6);
+                break;
+            case 6 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood7);
+                break;
+            case 7 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood8);
+                break;
+            case 8 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood9);
+                break;
+            case 9 :
+                moodNum = context.getResources().getDrawable(R.drawable.mood10);
+                break;
+        }
 
         // 가져온 객체안에 있는 데이터들을 각 뷰에 적용한다
-        polItemTitle.setText(listData.getTitle());
+        calItemMood.setImageDrawable(moodNum);
 
         // 클릭 시 디테일프래그먼트로 이동
         final int pos = i;
-        polItemFrame.setOnClickListener(new View.OnClickListener() {
+        calItemMood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity)context).replaceFragment(DetailFragment.newInstance());
@@ -68,13 +100,12 @@ public class PolGridViewAdapter extends BaseAdapter {
     }
 
     // ArrayList로 선언된 list 변수에 목록을 채워주기 위함 다른방식으로 구현해도 됨
-    public void addItemToPolGrid(String title, int mood){
+    public void addItemToCalGrid(int mood){
         Diary listdata = new Diary();
 
-        listdata.setTitle(title);
         listdata.setMood(mood);
 
         //값들의 조립이 완성된 listdata 객체 한개를 list 배열에 추가
-        polList.add(listdata);
+        calList.add(listdata);
     }
 }
