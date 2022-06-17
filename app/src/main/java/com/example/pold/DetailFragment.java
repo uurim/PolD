@@ -145,6 +145,14 @@ public class DetailFragment extends Fragment  {
             }
         });
 
+        // 삭제 버튼 클릭
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sqlDB.rawQuery("DELETE FROM diary WHERE code ='"+ mcode + "';", null);
+            }
+        });
+
         cursor.close();
         sqlDB.close();
         return v;
