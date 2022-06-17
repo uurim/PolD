@@ -16,7 +16,9 @@ public class DiaryDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE diary (" +
                 "'code' INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "'title' VARCHAR(20)," +
-                "'date' CHAR(10)," +
+                "'year' INTEGER," +
+                "'month' INTEGER," +
+                "'day' INTEGER," +
                 "'contents' TEXT," +
                 "'uri' VARCHAR(512)," +
                 "'mood' INTEGER);");

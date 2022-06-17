@@ -76,6 +76,8 @@ public class PolFragment extends Fragment {
 
             txtDatePol = getView().findViewById(R.id.txtDatePol);
             txtDatePol.setText(String.format("%d년 %d월", year, month + 1));
+
+            showPolGrid();
         }
     };
 
@@ -107,7 +109,7 @@ public class PolFragment extends Fragment {
         sqlDB = dbHelper.getWritableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT title, mood FROM diary;", null);
+        cursor = sqlDB.rawQuery("SELECT title, mood, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
 
         PolGridViewAdapter adapter = new PolGridViewAdapter();
         polGridView.setAdapter(adapter);

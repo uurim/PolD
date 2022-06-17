@@ -82,6 +82,8 @@ public class CalFragment extends Fragment {
 
             txtDateCal = getView().findViewById(R.id.txtDateCal);
             txtDateCal.setText(String.format("%d년 %d월", year, month + 1));
+
+            showCalGrid();
         }
     };
 
@@ -113,7 +115,7 @@ public class CalFragment extends Fragment {
         sqlDB = dbHelper.getWritableDatabase();
 
         Cursor cursor;
-        cursor = sqlDB.rawQuery("SELECT mood, date FROM diary;", null);
+        cursor = sqlDB.rawQuery("SELECT mood, year, month, day FROM diary WHERE year ==" + cal.get(Calendar.YEAR) + " AND month ==" + cal.get(Calendar.MONTH) + " ORDER BY day;", null);
 
         CalGridViewAdapter adapter = new CalGridViewAdapter();
         calGridView.setAdapter(adapter);
