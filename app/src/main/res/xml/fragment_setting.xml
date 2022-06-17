@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <PreferenceCategory
+            android:title="기능 설정"
+            app:iconSpaceReserved="false">
+
+                <SwitchPreference
+                    android:key="notice_switch"
+                    android:title="알림"
+                    android:defaultValue="true"
+                    app:iconSpaceReserved="false"/>
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:title="테마 설정"
+            app:iconSpaceReserved="false">
+
+                <ListPreference
+                    android:key="font_edit"
+                    android:title="글씨체"
+                    android:entries="@array/font_list"
+                    android:entryValues="@array/action_values"
+                    android:dialogTitle="폰트 선택"
+                    app:iconSpaceReserved="false"/>
+
+                <ListPreference
+                    android:key="back_color"
+                    android:title="배경색"
+                    android:entries="@array/back_list"
+                    android:entryValues="@array/action_values"
+                    android:dialogTitle="색상 선택"
+                    app:iconSpaceReserved="false"/>
+
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:title="POL:D"
+            app:iconSpaceReserved="false">
+
+                <Preference
+                    app:title="피드백 보내기"
+                    app:key="feedback"
+                    app:summary="많관부"
+                    app:iconSpaceReserved="false"/>
+
+
+                <PreferenceScreen
+                    android:title="인스타그램 방문하기"
+                    app:key="sns"
+                    app:iconSpaceReserved="false">
+                        <intent android:action="android.intent.action.VIEW"
+                            android:data="https://www.instagram.com/u_r.im/" />
+                </PreferenceScreen>
+
+        </PreferenceCategory>
+</PreferenceScreen>

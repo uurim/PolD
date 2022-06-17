@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="font_list">
+        <item>고딕</item>
+        <item>꽃집막내딸</item>
+    </string-array>
+
+    <string-array name="back_list">
+        <item>파란색</item>
+        <item>회색</item>
+    </string-array>
+
+    <string-array name="action_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+</resources>
