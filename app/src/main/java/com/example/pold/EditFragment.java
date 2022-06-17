@@ -192,7 +192,7 @@ public class EditFragment extends Fragment  implements onBackPressedListener {
             }
         });
 
-//        // 지울 거 : 개발중 DB 초기화 버튼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        // 지울 거 : 개발중 한 번에 DB 초기화 버튼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //        ImageView justRemove = v.findViewById(R.id.iconImg);
 //        justRemove.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -1,6 +1,8 @@
 package com.example.pold;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -118,7 +120,16 @@ public class UpdateFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DetailFragment.newInstance(mcode);
+                AlertDialog.Builder backDlg = new AlertDialog.Builder(getContext());
+                backDlg.setMessage("수정된 내용이 저장되지 않습니다.\n뒤로 가시겠습니까?");
+                backDlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ((MainActivity)getActivity()).replaceFragment(DetailFragment.newInstance(mcode));
+                    }
+                });
+                backDlg.setNegativeButton("취소", null);
+                backDlg.show();
             }
         });
 
@@ -160,10 +171,11 @@ public class UpdateFragment extends Fragment {
         DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                updateDate.setText(String.format("%d년 %d월 %d일", y, m + 1, d));
                 year = y;
                 month = m;
                 day = d;
+
+                updateDate.setText(String.format("%d년 %d월 %d일", y, m + 1, d));
             }
         };
 
