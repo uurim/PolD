@@ -1,10 +1,13 @@
 package com.example.pold;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +31,46 @@ public class SettingFragment extends PreferenceFragmentCompat {
         return fragment;
     }
 
+    SharedPreferences prefs;
+
+    ListPreference font;
+    ListPreference backColor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+
+        addPreferencesFromResource(R.xml.fragment_setting);
+        font = findPreference("font_edit");
+        backColor = findPreference("back_color");
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if(!prefs.getString("font_edit", "").equals("")){
+            font.setSummary(prefs.getString("font_edit", "꽃집막내딸"));
         }
+        if(!prefs.getString("back_color", "").equals("")){
+            backColor.setSummary(prefs.getString("back_color", "파란색"));
+        }
+
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
     }
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
-        setPreferencesFromResource(R.xml.fragment_setting, rootKey);
+
     }
+
+    SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if(key.equals("font_list")){
+                font.setSummary(prefs.getString("font_edit", "꽃집막내딸"));
+            }
+
+            if(key.equals("back_list")){
+                font.setSummary(prefs.getString("back_color", "파란색"));
+            }
+        }
+    };
 }
